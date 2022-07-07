@@ -97,7 +97,7 @@ function segmentBidirectionalLongest(
 ### Extractor
 #### extractKeywords
 ```ts
-function extractKeywords(matches: IMatch[], top: number): Match[]
+function extractKeywords(matches: Match[], top: number): Match[]
 ```
 
 ### Match
