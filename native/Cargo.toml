@@ -1,0 +1,22 @@
+[package]
+name = "ultra-nlp-js"
+version = "0.1.0"
+authors = ["BlackGlory <woshenmedoubuzhidao@blackglory.me>"]
+license = "MIT"
+edition = "2021"
+exclude = ["artifacts.json", "index.node"]
+
+[lib]
+name = "ultra_nlp_js"
+crate-type = ["cdylib"]
+
+[build-dependencies]
+neon-build = "0.10.1"
+
+[dependencies]
+ultra-nlp = "0.3.0"
+
+[dependencies.neon]
+version = "0.10.1"
+default-features = false
+features = ["napi-4"]

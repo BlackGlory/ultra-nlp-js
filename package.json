@@ -1,0 +1,68 @@
+{
+  "name": "ultra-nlp-js",
+  "version": "0.1.0",
+  "description": "A Node.js binding for ultra-nlp",
+  "keywords": [
+    "rust",
+    "native"
+  ],
+  "files": [
+    "lib",
+    "native/src",
+    "native/Cargo.lock",
+    "native/Cargo.toml"
+  ],
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "repository": "git@github.com:BlackGlory/ultra-nlp-js.git",
+  "author": "BlackGlory <woshenmedoubuzhidao@blackglory.me>",
+  "license": "MIT",
+  "scripts": {
+    "install": "neon build --release && rimraf native/target",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx --quiet src __tests__",
+    "test": "jest --config jest.config.js",
+    "test:coverage": "jest --coverage --config jest.config.js",
+    "prepublishOnly": "run-s clean build",
+    "clean": "run-p clean:*",
+    "clean:rs": "neon clean",
+    "clean:ts": "rimraf lib",
+    "build": "run-p build:*",
+    "build:rs": "neon build --release",
+    "build:ts": "run-s build:ts:*",
+    "build:ts:compile": "tsc --project tsconfig.build.json --module commonjs --target es2018 --outDir lib",
+    "build:ts:patch": "tscpaths -p tsconfig.build.json -s ./src -o ./lib",
+    "release": "standard-version"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "run-s lint build test",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "devDependencies": {
+    "@blackglory/go": "^1.1.1",
+    "@commitlint/cli": "^17.0.3",
+    "@commitlint/config-conventional": "^17.0.3",
+    "@types/jest": "^27.5.1",
+    "@types/node": "14",
+    "@typescript-eslint/eslint-plugin": "^5.30.5",
+    "@typescript-eslint/parser": "^5.30.5",
+    "eslint": "^8.19.0",
+    "extra-filesystem": "^0.4.2",
+    "husky": "4",
+    "jest": "^27.5.1",
+    "npm-run-all": "^4.1.5",
+    "pretty-bytes": "5",
+    "return-style": "^1.0.0",
+    "rimraf": "^3.0.2",
+    "standard-version": "^9.5.0",
+    "ts-jest": "^27.1.3",
+    "tscpaths": "^0.0.9",
+    "tslib": "^2.4.0",
+    "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "extra-lazy": "^1.1.1",
+    "neon-cli": "^0.10.1"
+  }
+}
