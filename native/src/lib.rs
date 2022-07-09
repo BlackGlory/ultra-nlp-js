@@ -1,27 +1,37 @@
 use neon::prelude::*;
 use ultra_nlp::{
     Match,
-    StandardDictionary,
-    BackwardDictionary,
-    ForwardDictionary,
     BehaviorForUnmatched,
+    cedarwood,
+    daachorse,
 };
 
-pub struct JsStandardDictionary {
-    dict: StandardDictionary,
+struct JsCedarwoodForwardDictionary {
+    dict: cedarwood::ForwardDictionary,
 }
 
-pub struct JsForwardDictionary {
-    dict: ForwardDictionary,
+struct JsCedarwoodBackwardDictionary {
+    dict: cedarwood::BackwardDictionary,
 }
 
-pub struct JsBackwardDictionary {
-    dict: BackwardDictionary,
+impl Finalize for JsCedarwoodForwardDictionary {}
+impl Finalize for JsCedarwoodBackwardDictionary {}
+
+struct JsDaachorseStandardDictionary {
+    dict: daachorse::StandardDictionary,
 }
 
-impl Finalize for JsStandardDictionary {}
-impl Finalize for JsForwardDictionary {}
-impl Finalize for JsBackwardDictionary {}
+struct JsDaachorseForwardDictionary {
+    dict: daachorse::ForwardDictionary,
+}
+
+struct JsDaachorseBackwardDictionary {
+    dict: daachorse::BackwardDictionary,
+}
+
+impl Finalize for JsDaachorseStandardDictionary {}
+impl Finalize for JsDaachorseForwardDictionary {}
+impl Finalize for JsDaachorseBackwardDictionary {}
 
 #[neon::main]
 fn main(mut cx: ModuleContext) -> NeonResult<()> {
@@ -34,117 +44,95 @@ fn main(mut cx: ModuleContext) -> NeonResult<()> {
     behavior_for_unmatched.set(&mut cx, "KeepAsChars", keep_as_chars)?;
     cx.export_value("BehaviorForUnmatched", behavior_for_unmatched)?;
 
-    cx.export_function("createStandardDictionary", create_standard_dictionary)?;
-    cx.export_function("createStandardDictionaryWithTfIdf", create_standard_dictionary_with_tf_idf)?;
-    cx.export_function("createForwardDictionary", create_forward_dictionary)?;
-    cx.export_function("createForwardDictionaryWithTfIdf", create_forward_dictionary_with_tf_idf)?;
-    cx.export_function("createBackwardDictionary", create_backward_dictionary)?;
-    cx.export_function("createBackwardDictionaryWithTfIdf", create_backward_dictionary_with_tf_idf)?;
-
-    cx.export_function("segmentFully", segment_fully)?;
-    cx.export_function("segmentForwardLongest", segment_forward_longsest)?;
-    cx.export_function("segmentBackwardLongest", segment_backward_longest)?;
-    cx.export_function("segmentBidirectionalLongest", segment_bidirectional_longest)?;
     // cx.export_function("extractKeywords", extract_keywords)?;
+
+    cx.export_function("cedarwoodCreateForwardDictionary", cedarwood_create_forward_dictionary)?;
+    cx.export_function("cedarwoodCreateForwardDictionaryWithTfIdf", cedarwood_create_forward_dictionary_with_tf_idf)?;
+    cx.export_function("cedarwoodCreateBackwardDictionary", cedarwood_create_backward_dictionary)?;
+    cx.export_function("cedarwoodCreateBackwardDictionaryWithTfIdf", cedarwood_create_backward_dictionary_with_tf_idf)?;
+    cx.export_function("cedarwoodSegmentFully", cedarwood_segment_fully)?;
+    cx.export_function("cedarwoodSegmentForwardLongest", cedarwood_segment_forward_longsest)?;
+    cx.export_function("cedarwoodSegmentBackwardLongest", cedarwood_segment_backward_longest)?;
+    cx.export_function("cedarwoodSegmentBidirectionalLongest", cedarwood_segment_bidirectional_longest)?;
+
+    cx.export_function("daachorseCreateStandardDictionary", daachorse_create_standard_dictionary)?;
+    cx.export_function("daachorseCreateStandardDictionaryWithTfIdf", daachorse_create_standard_dictionary_with_tf_idf)?;
+    cx.export_function("daachorseCreateForwardDictionary", daachorse_create_forward_dictionary)?;
+    cx.export_function("daachorseCreateForwardDictionaryWithTfIdf", daachorse_create_forward_dictionary_with_tf_idf)?;
+    cx.export_function("daachorseCreateBackwardDictionary", daachorse_create_backward_dictionary)?;
+    cx.export_function("daachorseCreateBackwardDictionaryWithTfIdf", daachorse_create_backward_dictionary_with_tf_idf)?;
+    cx.export_function("daachorseSegmentFully", daachorse_segment_fully)?;
+    cx.export_function("daachorseSegmentForwardLongest", daachorse_segment_forward_longsest)?;
+    cx.export_function("daachorseSegmentBackwardLongest", daachorse_segment_backward_longest)?;
+    cx.export_function("daachorseSegmentBidirectionalLongest", daachorse_segment_bidirectional_longest)?;
 
     Ok(())
 }
 
-// createStandardDictionary(patterns: string[]): NativeStandardDictionary
-fn create_standard_dictionary(
-    mut cx: FunctionContext
-) -> JsResult<JsBox<JsStandardDictionary>> {
+// cedarwood.createForwardDictionary(patterns: string[]): NativeCedarForwardDictionary
+fn cedarwood_create_forward_dictionary(mut cx: FunctionContext) -> JsResult<JsBox<JsCedarwoodForwardDictionary>> {
     let patterns = cx.argument::<JsArray>(0)?;
     let patterns = js_array_to_vec_string(&mut cx, patterns)?;
 
-    match StandardDictionary::new(patterns) {
-        Ok(dict) => Ok(cx.boxed(JsStandardDictionary { dict })),
-        Err(err) => cx.throw_error(err.to_string()),
+    match cedarwood::ForwardDictionary::new(patterns) {
+        Ok(dict) =>Ok(cx.boxed(JsCedarwoodForwardDictionary { dict })),
+        Err(err) => cx.throw_error(err.to_string())
     }
 }
 
-// createStandardDictionary(
+// cedarwood.createForwardDictionaryWithTfIdf(
 //   patternsWithTfIdf: Array<[pattern: string, tfIdf: number]>
-// ): NativeStandardDictionary
-fn create_standard_dictionary_with_tf_idf(
-    mut cx: FunctionContext
-) -> JsResult<JsBox<JsStandardDictionary>> {
+// ): NativeCedarwoodForwardDictionary
+fn cedarwood_create_forward_dictionary_with_tf_idf(mut cx: FunctionContext) -> JsResult<JsBox<JsCedarwoodForwardDictionary>> {
     let patterns_with_tf_idf = cx.argument::<JsArray>(0)?;
     let patterns_with_tf_idf = patterns_with_tf_idf_to_vec(
         &mut cx,
         patterns_with_tf_idf
     )?;
 
-    match StandardDictionary::new_with_tf_idf(patterns_with_tf_idf) {
-        Ok(dict) => Ok(cx.boxed(JsStandardDictionary { dict })),
+    match cedarwood::ForwardDictionary::new_with_tf_idf(patterns_with_tf_idf) {
+        Ok(dict) => Ok(cx.boxed(JsCedarwoodForwardDictionary { dict })),
         Err(err) => cx.throw_error(err.to_string())
     }
 }
 
-// createForwardDictionary(patterns: string[]): NativeForwardDictionary
-fn create_forward_dictionary(mut cx: FunctionContext) -> JsResult<JsBox<JsForwardDictionary>> {
+// cedarwood.createBackwardDictionary(patterns: string[]): NativeCedarwoodBackwardDictionary
+fn cedarwood_create_backward_dictionary(mut cx: FunctionContext) -> JsResult<JsBox<JsCedarwoodBackwardDictionary>> {
     let patterns = cx.argument::<JsArray>(0)?;
     let patterns = js_array_to_vec_string(&mut cx, patterns)?;
 
-    match ForwardDictionary::new(patterns) {
-        Ok(dict) =>Ok(cx.boxed(JsForwardDictionary { dict })),
+    match cedarwood::BackwardDictionary::new(patterns) {
+        Ok(dict) => Ok(cx.boxed(JsCedarwoodBackwardDictionary { dict })),
         Err(err) => cx.throw_error(err.to_string())
     }
 }
 
-// createForwardDictionary(
+// cedarwood.createBackwardDictionaryWithTfIdf(
 //   patternsWithTfIdf: Array<[pattern: string, tfIdf: number]>
-// ): NativeForwardDictionary
-fn create_forward_dictionary_with_tf_idf(mut cx: FunctionContext) -> JsResult<JsBox<JsForwardDictionary>> {
+// ): NativeCedarwoodBackwardDictionary
+fn cedarwood_create_backward_dictionary_with_tf_idf(mut cx: FunctionContext) -> JsResult<JsBox<JsCedarwoodBackwardDictionary>> {
     let patterns_with_tf_idf = cx.argument::<JsArray>(0)?;
     let patterns_with_tf_idf = patterns_with_tf_idf_to_vec(
         &mut cx,
         patterns_with_tf_idf
     )?;
 
-    match ForwardDictionary::new_with_tf_idf(patterns_with_tf_idf) {
-        Ok(dict) => Ok(cx.boxed(JsForwardDictionary { dict })),
+    match cedarwood::BackwardDictionary::new_with_tf_idf(patterns_with_tf_idf) {
+        Ok(dict) => Ok(cx.boxed(JsCedarwoodBackwardDictionary { dict })),
         Err(err) => cx.throw_error(err.to_string())
     }
 }
 
-// createBackwardDictionary(patterns: string[]): NativeBackwardDictionary
-fn create_backward_dictionary(mut cx: FunctionContext) -> JsResult<JsBox<JsBackwardDictionary>> {
-    let patterns = cx.argument::<JsArray>(0)?;
-    let patterns = js_array_to_vec_string(&mut cx, patterns)?;
-
-    match BackwardDictionary::new(patterns) {
-        Ok(dict) => Ok(cx.boxed(JsBackwardDictionary { dict })),
-        Err(err) => cx.throw_error(err.to_string())
-    }
-}
-
-// createBackwardDictionary(
-//   patternsWithTfIdf: Array<[pattern: string, tfIdf: number]>
-// ): NativeBackwardDictionary
-fn create_backward_dictionary_with_tf_idf(mut cx: FunctionContext) -> JsResult<JsBox<JsBackwardDictionary>> {
-    let patterns_with_tf_idf = cx.argument::<JsArray>(0)?;
-    let patterns_with_tf_idf = patterns_with_tf_idf_to_vec(
-        &mut cx,
-        patterns_with_tf_idf
-    )?;
-
-    match BackwardDictionary::new_with_tf_idf(patterns_with_tf_idf) {
-        Ok(dict) => Ok(cx.boxed(JsBackwardDictionary { dict })),
-        Err(err) => cx.throw_error(err.to_string())
-    }
-}
-
-// segmentFully(
+// cedarwood.segmentFully(
 //   text: string
-// , dict: NativeStandardDictionary
+// , dict: NativeCedarwoodForwardDictionary
 // , behaviorForUnmatched: BehaviorForUnmatched
 // ): IMatch[]
-fn segment_fully(mut cx: FunctionContext) -> JsResult<JsArray> {
+fn cedarwood_segment_fully(mut cx: FunctionContext) -> JsResult<JsArray> {
     let text = cx.argument::<JsString>(0)?;
     let text = js_string_to_string(&mut cx, text)?;
 
-    let dict = &cx.argument::<JsBox<JsStandardDictionary>>(1)?.dict;
+    let dict = &cx.argument::<JsBox<JsCedarwoodForwardDictionary>>(1)?.dict;
 
     let behavior_for_unmatched = cx.argument::<JsNumber>(2)?;
     let behavior_for_unmatched = js_number_to_behavior_for_unmatched(
@@ -152,7 +140,7 @@ fn segment_fully(mut cx: FunctionContext) -> JsResult<JsArray> {
         behavior_for_unmatched
     )?;
 
-    let matches = ultra_nlp::segment_fully(
+    let matches = cedarwood::segment_fully(
         text,
         dict,
         behavior_for_unmatched
@@ -163,16 +151,16 @@ fn segment_fully(mut cx: FunctionContext) -> JsResult<JsArray> {
     Ok(js_array)
 }
 
-// segmentForwardLongest(
+// cedarwood.segmentForwardLongest(
 //   text: string
-// , dict: NativeForwardDictionary
+// , dict: NativeCedarwoodForwardDictionary
 // , behaviorForUnmatched: BehaviorForUnmatched
 // ): IMatch[]
-fn segment_forward_longsest(mut cx: FunctionContext) -> JsResult<JsArray> {
+fn cedarwood_segment_forward_longsest(mut cx: FunctionContext) -> JsResult<JsArray> {
     let text = cx.argument::<JsString>(0)?;
     let text = js_string_to_string(&mut cx, text)?;
 
-    let dict = &cx.argument::<JsBox<JsForwardDictionary>>(1)?.dict;
+    let dict = &cx.argument::<JsBox<JsCedarwoodForwardDictionary>>(1)?.dict;
 
     let behavior_for_unmatched = cx.argument::<JsNumber>(2)?;
     let behavior_for_unmatched = js_number_to_behavior_for_unmatched(
@@ -180,7 +168,7 @@ fn segment_forward_longsest(mut cx: FunctionContext) -> JsResult<JsArray> {
         behavior_for_unmatched
     )?;
 
-    let matches = ultra_nlp::segment_forward_longest(
+    let matches = cedarwood::segment_forward_longest(
         text,
         dict,
         behavior_for_unmatched
@@ -191,16 +179,16 @@ fn segment_forward_longsest(mut cx: FunctionContext) -> JsResult<JsArray> {
     Ok(js_array)
 }
 
-// segmentBackwardLongest(
+// cedarwood.segmentBackwardLongest(
 //   text: string
-// , dict: NativeBackwardDictionary
+// , dict: NativeCedarwoodBackwardDictionary
 // , behaviorForUnmatched: BehaviorForUnmatched
 // ): IMatch[]
-fn segment_backward_longest(mut cx: FunctionContext) -> JsResult<JsArray> {
+fn cedarwood_segment_backward_longest(mut cx: FunctionContext) -> JsResult<JsArray> {
     let text = cx.argument::<JsString>(0)?;
     let text = js_string_to_string(&mut cx, text)?;
 
-    let dict = &cx.argument::<JsBox<JsBackwardDictionary>>(1)?.dict;
+    let dict = &cx.argument::<JsBox<JsCedarwoodBackwardDictionary>>(1)?.dict;
 
     let behavior_for_unmatched = cx.argument::<JsNumber>(2)?;
     let behavior_for_unmatched = js_number_to_behavior_for_unmatched(
@@ -208,25 +196,25 @@ fn segment_backward_longest(mut cx: FunctionContext) -> JsResult<JsArray> {
         behavior_for_unmatched
     )?;
 
-    let matches = ultra_nlp::segment_backward_longest(text, dict, behavior_for_unmatched);
+    let matches = cedarwood::segment_backward_longest(text, dict, behavior_for_unmatched);
 
     let js_array = matches_to_js_array(&mut cx, matches)?;
 
     Ok(js_array)
 }
 
-// segmentBidirectionalLongest(
+// cedarwood.segmentBidirectionalLongest(
 //   text: string
-// , forwardDict: NativeForwardDictionary
-// , backwardDict: NativeBackwardDictionary
+// , forwardDict: NativeCedarForwardDictionary
+// , backwardDict: NativeCedarBackwardDictionary
 // , behaviorForUnmatched: BehaviorForUnmatched
 // ): IMatch[]
-fn segment_bidirectional_longest(mut cx: FunctionContext) -> JsResult<JsArray> {
+fn cedarwood_segment_bidirectional_longest(mut cx: FunctionContext) -> JsResult<JsArray> {
     let text = cx.argument::<JsString>(0)?;
     let text = js_string_to_string(&mut cx, text)?;
 
-    let forward_dict = &cx.argument::<JsBox<JsForwardDictionary>>(1)?.dict;
-    let backward_dict = &cx.argument::<JsBox<JsBackwardDictionary>>(2)?.dict;
+    let forward_dict = &cx.argument::<JsBox<JsCedarwoodForwardDictionary>>(1)?.dict;
+    let backward_dict = &cx.argument::<JsBox<JsCedarwoodBackwardDictionary>>(2)?.dict;
 
     let behavior_for_unmatched = cx.argument::<JsNumber>(3)?;
     let behavior_for_unmatched = js_number_to_behavior_for_unmatched(
@@ -234,7 +222,203 @@ fn segment_bidirectional_longest(mut cx: FunctionContext) -> JsResult<JsArray> {
         behavior_for_unmatched
     )?;
 
-    let matches = ultra_nlp::segment_bidirectional_longest(
+    let matches = cedarwood::segment_bidirectional_longest(
+        text,
+        forward_dict,
+        backward_dict,
+        behavior_for_unmatched
+    );
+
+    let js_array = matches_to_js_array(&mut cx, matches)?;
+
+    Ok(js_array)
+}
+
+// daachorse.createStandardDictionary(patterns: string[]): NativeDaachorseDictionary
+fn daachorse_create_standard_dictionary(
+    mut cx: FunctionContext
+) -> JsResult<JsBox<JsDaachorseStandardDictionary>> {
+    let patterns = cx.argument::<JsArray>(0)?;
+    let patterns = js_array_to_vec_string(&mut cx, patterns)?;
+
+    match daachorse::StandardDictionary::new(patterns) {
+        Ok(dict) => Ok(cx.boxed(JsDaachorseStandardDictionary { dict })),
+        Err(err) => cx.throw_error(err.to_string()),
+    }
+}
+
+// daachorse.createStandardDictionaryWithTfIdf(
+//   patternsWithTfIdf: Array<[pattern: string, tfIdf: number]>
+// ): NativeDaachorseStandardDictionary
+fn daachorse_create_standard_dictionary_with_tf_idf(
+    mut cx: FunctionContext
+) -> JsResult<JsBox<JsDaachorseStandardDictionary>> {
+    let patterns_with_tf_idf = cx.argument::<JsArray>(0)?;
+    let patterns_with_tf_idf = patterns_with_tf_idf_to_vec(
+        &mut cx,
+        patterns_with_tf_idf
+    )?;
+
+    match daachorse::StandardDictionary::new_with_tf_idf(patterns_with_tf_idf) {
+        Ok(dict) => Ok(cx.boxed(JsDaachorseStandardDictionary { dict })),
+        Err(err) => cx.throw_error(err.to_string())
+    }
+}
+
+// daachorse.createForwardDictionary(patterns: string[]): NativeDaachorseForwardDictionary
+fn daachorse_create_forward_dictionary(mut cx: FunctionContext) -> JsResult<JsBox<JsDaachorseForwardDictionary>> {
+    let patterns = cx.argument::<JsArray>(0)?;
+    let patterns = js_array_to_vec_string(&mut cx, patterns)?;
+
+    match daachorse::ForwardDictionary::new(patterns) {
+        Ok(dict) =>Ok(cx.boxed(JsDaachorseForwardDictionary { dict })),
+        Err(err) => cx.throw_error(err.to_string())
+    }
+}
+
+// daachorse.createForwardDictionaryWithTfIdf(
+//   patternsWithTfIdf: Array<[pattern: string, tfIdf: number]>
+// ): NativeDaachorseForwardDictionary
+fn daachorse_create_forward_dictionary_with_tf_idf(mut cx: FunctionContext) -> JsResult<JsBox<JsDaachorseForwardDictionary>> {
+    let patterns_with_tf_idf = cx.argument::<JsArray>(0)?;
+    let patterns_with_tf_idf = patterns_with_tf_idf_to_vec(
+        &mut cx,
+        patterns_with_tf_idf
+    )?;
+
+    match daachorse::ForwardDictionary::new_with_tf_idf(patterns_with_tf_idf) {
+        Ok(dict) => Ok(cx.boxed(JsDaachorseForwardDictionary { dict })),
+        Err(err) => cx.throw_error(err.to_string())
+    }
+}
+
+// daachorse.createBackwardDictionary(patterns: string[]): NativeDaachorseBackwardDictionary
+fn daachorse_create_backward_dictionary(mut cx: FunctionContext) -> JsResult<JsBox<JsDaachorseBackwardDictionary>> {
+    let patterns = cx.argument::<JsArray>(0)?;
+    let patterns = js_array_to_vec_string(&mut cx, patterns)?;
+
+    match daachorse::BackwardDictionary::new(patterns) {
+        Ok(dict) => Ok(cx.boxed(JsDaachorseBackwardDictionary { dict })),
+        Err(err) => cx.throw_error(err.to_string())
+    }
+}
+
+// daachorse.createBackwardDictionaryWithTfIdf(
+//   patternsWithTfIdf: Array<[pattern: string, tfIdf: number]>
+// ): NativeDaachorseBackwardDictionary
+fn daachorse_create_backward_dictionary_with_tf_idf(mut cx: FunctionContext) -> JsResult<JsBox<JsDaachorseBackwardDictionary>> {
+    let patterns_with_tf_idf = cx.argument::<JsArray>(0)?;
+    let patterns_with_tf_idf = patterns_with_tf_idf_to_vec(
+        &mut cx,
+        patterns_with_tf_idf
+    )?;
+
+    match daachorse::BackwardDictionary::new_with_tf_idf(patterns_with_tf_idf) {
+        Ok(dict) => Ok(cx.boxed(JsDaachorseBackwardDictionary { dict })),
+        Err(err) => cx.throw_error(err.to_string())
+    }
+}
+
+// daachorse.segmentFully(
+//   text: string
+// , dict: NativeDaachorseStandardDictionary
+// , behaviorForUnmatched: BehaviorForUnmatched
+// ): IMatch[]
+fn daachorse_segment_fully(mut cx: FunctionContext) -> JsResult<JsArray> {
+    let text = cx.argument::<JsString>(0)?;
+    let text = js_string_to_string(&mut cx, text)?;
+
+    let dict = &cx.argument::<JsBox<JsDaachorseStandardDictionary>>(1)?.dict;
+
+    let behavior_for_unmatched = cx.argument::<JsNumber>(2)?;
+    let behavior_for_unmatched = js_number_to_behavior_for_unmatched(
+        &mut cx,
+        behavior_for_unmatched
+    )?;
+
+    let matches = daachorse::segment_fully(
+        text,
+        dict,
+        behavior_for_unmatched
+    );
+
+    let js_array = matches_to_js_array(&mut cx, matches)?;
+
+    Ok(js_array)
+}
+
+// daachorse.segmentForwardLongest(
+//   text: string
+// , dict: NativeDaachorseForwardDictionary
+// , behaviorForUnmatched: BehaviorForUnmatched
+// ): IMatch[]
+fn daachorse_segment_forward_longsest(mut cx: FunctionContext) -> JsResult<JsArray> {
+    let text = cx.argument::<JsString>(0)?;
+    let text = js_string_to_string(&mut cx, text)?;
+
+    let dict = &cx.argument::<JsBox<JsDaachorseForwardDictionary>>(1)?.dict;
+
+    let behavior_for_unmatched = cx.argument::<JsNumber>(2)?;
+    let behavior_for_unmatched = js_number_to_behavior_for_unmatched(
+        &mut cx,
+        behavior_for_unmatched
+    )?;
+
+    let matches = daachorse::segment_forward_longest(
+        text,
+        dict,
+        behavior_for_unmatched
+    );
+
+    let js_array = matches_to_js_array(&mut cx, matches)?;
+
+    Ok(js_array)
+}
+
+// daachorse.segmentBackwardLongest(
+//   text: string
+// , dict: NativeDaachorseBackwardDictionary
+// , behaviorForUnmatched: BehaviorForUnmatched
+// ): IMatch[]
+fn daachorse_segment_backward_longest(mut cx: FunctionContext) -> JsResult<JsArray> {
+    let text = cx.argument::<JsString>(0)?;
+    let text = js_string_to_string(&mut cx, text)?;
+
+    let dict = &cx.argument::<JsBox<JsDaachorseBackwardDictionary>>(1)?.dict;
+
+    let behavior_for_unmatched = cx.argument::<JsNumber>(2)?;
+    let behavior_for_unmatched = js_number_to_behavior_for_unmatched(
+        &mut cx,
+        behavior_for_unmatched
+    )?;
+
+    let matches = daachorse::segment_backward_longest(text, dict, behavior_for_unmatched);
+
+    let js_array = matches_to_js_array(&mut cx, matches)?;
+
+    Ok(js_array)
+}
+
+// daachorse.segmentBidirectionalLongest(
+//   text: string
+// , forwardDict: NativeDaachorseForwardDictionary
+// , backwardDict: NativeDaachorseBackwardDictionary
+// , behaviorForUnmatched: BehaviorForUnmatched
+// ): IMatch[]
+fn daachorse_segment_bidirectional_longest(mut cx: FunctionContext) -> JsResult<JsArray> {
+    let text = cx.argument::<JsString>(0)?;
+    let text = js_string_to_string(&mut cx, text)?;
+
+    let forward_dict = &cx.argument::<JsBox<JsDaachorseForwardDictionary>>(1)?.dict;
+    let backward_dict = &cx.argument::<JsBox<JsDaachorseBackwardDictionary>>(2)?.dict;
+
+    let behavior_for_unmatched = cx.argument::<JsNumber>(3)?;
+    let behavior_for_unmatched = js_number_to_behavior_for_unmatched(
+        &mut cx,
+        behavior_for_unmatched
+    )?;
+
+    let matches = daachorse::segment_bidirectional_longest(
         text,
         forward_dict,
         backward_dict,

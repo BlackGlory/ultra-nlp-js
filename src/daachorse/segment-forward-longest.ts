@@ -1,16 +1,15 @@
-import { IAddon, BehaviorForUnmatched } from './types'
-import { Match } from './match'
-import { convertIMatchToMatch } from './utils'
+import { BehaviorForUnmatched } from '@src/types'
+import { Match } from '@src/match'
+import { convertIMatchToMatch } from '@src/utils'
 import { ForwardDictionary } from './forward-dictionary'
-
-const addon: IAddon = require('../native')
+import { addon } from '@src/addon'
 
 export function segmentForwardLongest(
   text: string
 , dict: ForwardDictionary
 , behaviorForUnmatched: BehaviorForUnmatched
 ): Match[] {
-  const results = addon.segmentForwardLongest(
+  const results = addon.daachorseSegmentForwardLongest(
     text
   , dict.instance
   , behaviorForUnmatched

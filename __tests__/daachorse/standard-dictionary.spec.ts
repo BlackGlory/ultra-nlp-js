@@ -1,12 +1,12 @@
-import { ForwardDictionary } from '@src/forward-dictionary'
+import { StandardDictionary } from '@daachorse/standard-dictionary'
 import { getError } from 'return-style'
 
-describe('ForwardDictionary', () => {
+describe('StandardDictionary', () => {
   describe('create', () => {
     test('empty patterns', () => {
       const patterns: string[] = []
 
-      const err = getError(() => ForwardDictionary.create(patterns))
+      const err = getError(() => StandardDictionary.create(patterns))
 
       expect(err).not.toBeUndefined()
     })
@@ -14,7 +14,7 @@ describe('ForwardDictionary', () => {
     test('patterns', () => {
       const patterns = ['foo', 'bar']
 
-      ForwardDictionary.create(patterns)
+      StandardDictionary.create(patterns)
     })
   })
 
@@ -22,7 +22,7 @@ describe('ForwardDictionary', () => {
     test('create with empty patterns with tf-idf', () => {
       const patterns: Array<[string, number]> = []
 
-      const err = getError(() => ForwardDictionary.createWithTfIdf(patterns))
+      const err = getError(() => StandardDictionary.createWithTfIdf(patterns))
 
       expect(err).not.toBeUndefined()
     })
@@ -30,7 +30,7 @@ describe('ForwardDictionary', () => {
     test('create with patterns with tf-idf', () => {
       const patterns: Array<[string, number]> = [['foo', 1], ['bar', 2]]
 
-      ForwardDictionary.createWithTfIdf(patterns)
+      StandardDictionary.createWithTfIdf(patterns)
     })
   })
 })

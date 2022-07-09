@@ -1,20 +1,17 @@
-import { StandardDictionary } from '@src/standard-dictionary'
-import { getError } from 'return-style'
+import { BackwardDictionary } from '@cedarwood/backward-dictionary'
 
-describe('StandardDictionary', () => {
+describe('BackwardDictionary', () => {
   describe('create', () => {
     test('empty patterns', () => {
       const patterns: string[] = []
 
-      const err = getError(() => StandardDictionary.create(patterns))
-
-      expect(err).not.toBeUndefined()
+      BackwardDictionary.create(patterns)
     })
 
     test('patterns', () => {
       const patterns = ['foo', 'bar']
 
-      StandardDictionary.create(patterns)
+      BackwardDictionary.create(patterns)
     })
   })
 
@@ -22,15 +19,13 @@ describe('StandardDictionary', () => {
     test('create with empty patterns with tf-idf', () => {
       const patterns: Array<[string, number]> = []
 
-      const err = getError(() => StandardDictionary.createWithTfIdf(patterns))
-
-      expect(err).not.toBeUndefined()
+      BackwardDictionary.createWithTfIdf(patterns)
     })
 
     test('create with patterns with tf-idf', () => {
       const patterns: Array<[string, number]> = [['foo', 1], ['bar', 2]]
 
-      StandardDictionary.createWithTfIdf(patterns)
+      BackwardDictionary.createWithTfIdf(patterns)
     })
   })
 })

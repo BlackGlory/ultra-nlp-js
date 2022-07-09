@@ -1,5 +1,5 @@
-import { segmentBackwardLongest } from '@src/segment-backward-longest'
-import { BackwardDictionary } from '@src/backward-dictionary'
+import { segmentBackwardLongest } from '@cedarwood/segment-backward-longest'
+import { BackwardDictionary } from '@cedarwood/backward-dictionary'
 import { BehaviorForUnmatched } from '@src/types'
 import { Match } from '@src/match'
 import { TextRange } from '@src/text-range'

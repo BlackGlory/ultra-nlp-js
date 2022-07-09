@@ -1,16 +1,15 @@
-import { IAddon, BehaviorForUnmatched } from './types'
-import { Match } from './match'
-import { convertIMatchToMatch } from './utils'
+import { BehaviorForUnmatched } from '@src/types'
+import { addon } from '@src/addon'
+import { Match } from '@src/match'
+import { convertIMatchToMatch } from '@src/utils'
 import { BackwardDictionary } from './backward-dictionary'
-
-const addon: IAddon = require('../native')
 
 export function segmentBackwardLongest(
   text: string
 , dict: BackwardDictionary
 , behaviorForUnmatched: BehaviorForUnmatched
 ): Match[] {
-  const results = addon.segmentBackwardLongest(
+  const results = addon.cedarwoodSegmentBackwardLongest(
     text
   , dict.instance
   , behaviorForUnmatched

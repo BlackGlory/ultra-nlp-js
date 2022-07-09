@@ -1,6 +1,4 @@
-import { IAddon, NativeBackwardDictionary } from './types'
-
-const addon: IAddon = require('../native')
+import { addon, NativeDaachorseBackwardDictionary } from '@src/addon'
 
 enum BackwardDictionaryConstructorKind {
   Patterns
@@ -8,7 +6,7 @@ enum BackwardDictionaryConstructorKind {
 }
 
 export class BackwardDictionary {
-  instance: NativeBackwardDictionary
+  instance: NativeDaachorseBackwardDictionary
 
   private constructor(
     kind: BackwardDictionaryConstructorKind.Patterns
@@ -31,10 +29,10 @@ export class BackwardDictionary {
     const [kind, patterns] = args
     switch (kind) {
       case BackwardDictionaryConstructorKind.Patterns:
-        this.instance = addon.createBackwardDictionary(patterns)
+        this.instance = addon.daachorseCreateBackwardDictionary(patterns)
         break
       case BackwardDictionaryConstructorKind.PatternsWithTfIdf:
-        this.instance = addon.createBackwardDictionaryWithTfIdf(patterns)
+        this.instance = addon.daachorseCreateBackwardDictionaryWithTfIdf(patterns)
         break
       default: throw new Error('Invalid kind')
     }

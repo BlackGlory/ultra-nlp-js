@@ -1,4 +1,4 @@
-import { BackwardDictionary } from '@src/backward-dictionary'
+import { BackwardDictionary } from '@daachorse/backward-dictionary'
 import { getError } from 'return-style'
 
 describe('BackwardDictionary', () => {

@@ -1,5 +1,5 @@
-import { segmentFull } from '@src/segment-fully'
-import { StandardDictionary } from '@src/standard-dictionary'
+import { segmentFull } from '@daachorse/segment-fully'
+import { StandardDictionary } from '@daachorse/standard-dictionary'
 import { BehaviorForUnmatched } from '@src/types'
 import { Match } from '@src/match'
 import { TextRange } from '@src/text-range'

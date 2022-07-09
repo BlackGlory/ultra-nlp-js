@@ -1,6 +1,4 @@
-import { IAddon, NativeForwardDictionary } from './types'
-
-const addon: IAddon = require('../native')
+import { addon, NativeCedarwoodForwardDictionary } from '@src/addon'
 
 enum ForwardDictionaryConstructorKind {
   Patterns
@@ -8,7 +6,7 @@ enum ForwardDictionaryConstructorKind {
 }
 
 export class ForwardDictionary {
-  instance: NativeForwardDictionary
+  instance: NativeCedarwoodForwardDictionary
 
   private constructor(
     kind: ForwardDictionaryConstructorKind.Patterns
@@ -31,10 +29,10 @@ export class ForwardDictionary {
     const [kind, patterns] = args
     switch (kind) {
       case ForwardDictionaryConstructorKind.Patterns:
-        this.instance = addon.createForwardDictionary(patterns)
+        this.instance = addon.cedarwoodCreateForwardDictionary(patterns)
         break
       case ForwardDictionaryConstructorKind.PatternsWithTfIdf:
-        this.instance = addon.createForwardDictionaryWithTfIdf(patterns)
+        this.instance = addon.cedarwoodCreateForwardDictionaryWithTfIdf(patterns)
         break
       default: throw new Error('Invalid kind')
     }

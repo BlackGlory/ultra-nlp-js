@@ -1,6 +1,4 @@
-import { IAddon, NativeStandardDictionary } from './types'
-
-const addon: IAddon = require('../native')
+import { addon, NativeDaachorseStandardDictionary } from '@src/addon'
 
 enum StandardDictionaryConstructorKind {
   Patterns
@@ -8,7 +6,7 @@ enum StandardDictionaryConstructorKind {
 }
 
 export class StandardDictionary {
-  instance: NativeStandardDictionary
+  instance: NativeDaachorseStandardDictionary
 
   private constructor(
     kind: StandardDictionaryConstructorKind.Patterns
@@ -31,10 +29,10 @@ export class StandardDictionary {
     const [kind, patterns] = args
     switch (kind) {
       case StandardDictionaryConstructorKind.Patterns:
-        this.instance = addon.createStandardDictionary(patterns)
+        this.instance = addon.daachorseCreateStandardDictionary(patterns)
         break
       case StandardDictionaryConstructorKind.PatternsWithTfIdf:
-        this.instance = addon.createStandardDictionaryWithTfIdf(patterns)
+        this.instance = addon.daachorseCreateStandardDictionaryWithTfIdf(patterns)
         break
       default: throw new Error('Invalid kind')
     }

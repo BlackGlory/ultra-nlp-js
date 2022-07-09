@@ -1,10 +1,9 @@
-import { IAddon, BehaviorForUnmatched } from './types'
-import { Match } from './match'
-import { convertIMatchToMatch } from './utils'
+import { BehaviorForUnmatched } from '@src/types'
+import { addon } from '@src/addon'
+import { Match } from '@src/match'
+import { convertIMatchToMatch } from '@src/utils'
 import { ForwardDictionary } from './forward-dictionary'
 import { BackwardDictionary } from './backward-dictionary'
-
-const addon: IAddon = require('../native')
 
 export function segmentBidirectionalLongest(
   text: string
@@ -12,7 +11,7 @@ export function segmentBidirectionalLongest(
 , backwardDict: BackwardDictionary
 , behaviorForUnmatched: BehaviorForUnmatched
 ): Match[] {
-  const results = addon.segmentBidirectionalLongest(
+  const results = addon.daachorseSegmentBidirectionalLongest(
     text
   , forwardDict.instance
   , backwardDict.instance

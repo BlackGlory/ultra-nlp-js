@@ -1,4 +1,4 @@
-import { IMatch } from './types'
+import { IMatch } from './addon'
 import { TextRange } from './text-range'
 import { Match } from './match'
 

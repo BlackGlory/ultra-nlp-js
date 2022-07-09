@@ -1,16 +1,15 @@
-import { IAddon, BehaviorForUnmatched } from './types'
-import { Match } from './match'
-import { convertIMatchToMatch } from './utils'
+import { BehaviorForUnmatched } from '@src/types'
+import { Match } from '@src/match'
+import { convertIMatchToMatch } from '@src/utils'
 import { StandardDictionary } from './standard-dictionary'
-
-const addon: IAddon = require('../native')
+import { addon } from '@src/addon'
 
 export function segmentFull(
   text: string
 , dict: StandardDictionary
 , behaviorForUnmatched: BehaviorForUnmatched
 ): Match[] {
-  const results = addon.segmentFully(
+  const results = addon.daachorseSegmentFully(
     text
   , dict.instance
   , behaviorForUnmatched
