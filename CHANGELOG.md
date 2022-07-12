@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.0](https://github.com/BlackGlory/ultra-nlp-js/compare/v0.2.0...v0.3.0) (2022-07-12)
+
+
+### ⚠ BREAKING CHANGES
+
+* - Renamed `getTfIdf` method of `Match` to `getValue`.
+
+* upgrade dependencies ([49c016c](https://github.com/BlackGlory/ultra-nlp-js/commit/49c016ce6ecf9f460c76f0f3b67ed361882c79cd))
+
 ## [0.2.0](https://github.com/BlackGlory/ultra-nlp-js/compare/v0.1.2...v0.2.0) (2022-07-09)
 
 
