@@ -16,8 +16,8 @@ describe('segmentFull', () => {
     ])
   })
 
-  test('dictionary with tf-idf', () => {
-    const dict = StandardDictionary.createWithTfIdf([['你好', 0.5], ['世界', 1.5]])
+  test('dictionary with values', () => {
+    const dict = StandardDictionary.createWithValues([['你好', 0.5], ['世界', 1.5]])
 
     const result = segmentFull('你好世界', dict, BehaviorForUnmatched.Ignore)
 

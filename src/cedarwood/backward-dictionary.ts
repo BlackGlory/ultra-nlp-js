@@ -2,7 +2,7 @@ import { addon, NativeCedarwoodBackwardDictionary } from '@src/addon'
 
 enum BackwardDictionaryConstructorKind {
   Patterns
-, PatternsWithTfIdf
+, PatternsWithValues
 }
 
 export class BackwardDictionary {
@@ -13,8 +13,8 @@ export class BackwardDictionary {
   , patterns: string[]
   )
   private constructor(
-    kind: BackwardDictionaryConstructorKind.PatternsWithTfIdf
-  , patternsWithTfIdf: Array<[pattern: string, tfIdf: number]>
+    kind: BackwardDictionaryConstructorKind.PatternsWithValues
+  , patternsWithValues: Array<[pattern: string, value: number]>
   )
   private constructor(...args:
   | [
@@ -22,8 +22,8 @@ export class BackwardDictionary {
     , patterns: string[]
     ]
   | [
-      kind: BackwardDictionaryConstructorKind.PatternsWithTfIdf
-    , patternsWithTfIdf: Array<[pattern: string, tfIdf: number]>
+      kind: BackwardDictionaryConstructorKind.PatternsWithValues
+    , patternsWithValues: Array<[pattern: string, value: number]>
     ]
   ) {
     const [kind, patterns] = args
@@ -31,8 +31,8 @@ export class BackwardDictionary {
       case BackwardDictionaryConstructorKind.Patterns:
         this.instance = addon.cedarwoodCreateBackwardDictionary(patterns)
         break
-      case BackwardDictionaryConstructorKind.PatternsWithTfIdf:
-        this.instance = addon.cedarwoodCreateBackwardDictionaryWithTfIdf(patterns)
+      case BackwardDictionaryConstructorKind.PatternsWithValues:
+        this.instance = addon.cedarwoodCreateBackwardDictionaryWithValues(patterns)
         break
       default: throw new Error('Invalid kind')
     }
@@ -45,12 +45,12 @@ export class BackwardDictionary {
     )
   }
 
-  static createWithTfIdf(
-    patternsWithTfIdf: Array<[pattern: string, tfIdf: number]>
+  static createWithValues(
+    patternsWithValues: Array<[pattern: string, value: number]>
   ): BackwardDictionary {
     return new BackwardDictionary(
-      BackwardDictionaryConstructorKind.PatternsWithTfIdf
-    , patternsWithTfIdf
+      BackwardDictionaryConstructorKind.PatternsWithValues
+    , patternsWithValues
     )
   }
 }

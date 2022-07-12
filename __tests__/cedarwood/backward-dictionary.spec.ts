@@ -15,17 +15,17 @@ describe('BackwardDictionary', () => {
     })
   })
 
-  describe('createWithTfIdf', () => {
-    test('create with empty patterns with tf-idf', () => {
+  describe('createWithValues', () => {
+    test('create with empty patterns with values', () => {
       const patterns: Array<[string, number]> = []
 
-      BackwardDictionary.createWithTfIdf(patterns)
+      BackwardDictionary.createWithValues(patterns)
     })
 
-    test('create with patterns with tf-idf', () => {
+    test('create with patterns with values', () => {
       const patterns: Array<[string, number]> = [['foo', 1], ['bar', 2]]
 
-      BackwardDictionary.createWithTfIdf(patterns)
+      BackwardDictionary.createWithValues(patterns)
     })
   })
 })

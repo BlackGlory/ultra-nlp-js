@@ -18,19 +18,19 @@ describe('StandardDictionary', () => {
     })
   })
 
-  describe('createWithTfIdf', () => {
-    test('create with empty patterns with tf-idf', () => {
+  describe('createWithValues', () => {
+    test('create with empty patterns with values', () => {
       const patterns: Array<[string, number]> = []
 
-      const err = getError(() => StandardDictionary.createWithTfIdf(patterns))
+      const err = getError(() => StandardDictionary.createWithValues(patterns))
 
       expect(err).not.toBeUndefined()
     })
 
-    test('create with patterns with tf-idf', () => {
+    test('create with patterns with values', () => {
       const patterns: Array<[string, number]> = [['foo', 1], ['bar', 2]]
 
-      StandardDictionary.createWithTfIdf(patterns)
+      StandardDictionary.createWithValues(patterns)
     })
   })
 })

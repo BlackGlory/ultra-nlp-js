@@ -7,7 +7,7 @@ export type NativeDaachorseBackwardDictionary = unknown
 
 export interface IMatch {
   range: ITextRange
-  tfIdf: number | null
+  value: number | null
 }
 
 interface ITextRange {
@@ -25,13 +25,13 @@ interface IAddon {
   // extractKeywords(matches: IMatch[], top: number): IMatch[]
 
   cedarwoodCreateForwardDictionary(patterns: string[]): NativeCedarwoodForwardDictionary
-  cedarwoodCreateForwardDictionaryWithTfIdf(
-    patternsWithTfIdf: Array<[pattern: string, tfIdf: number]>
+  cedarwoodCreateForwardDictionaryWithValues(
+    patternsWithValues: Array<[pattern: string, value: number]>
   ): NativeCedarwoodForwardDictionary
 
   cedarwoodCreateBackwardDictionary(patterns: string[]): NativeCedarwoodBackwardDictionary
-  cedarwoodCreateBackwardDictionaryWithTfIdf(
-    patternsWithTfIdf: Array<[pattern: string, tfIdf: number]>
+  cedarwoodCreateBackwardDictionaryWithValues(
+    patternsWithValues: Array<[pattern: string, value: number]>
   ): NativeCedarwoodBackwardDictionary
 
   cedarwoodSegmentFully(
@@ -60,18 +60,18 @@ interface IAddon {
   ): IMatch[]
 
   daachorseCreateStandardDictionary(patterns: string[]): NativeDaachorseStandardDictionary
-  daachorseCreateStandardDictionaryWithTfIdf(
-    patternsWithTfIdf: Array<[pattern: string, tfIdf: number]>
+  daachorseCreateStandardDictionaryWithValues(
+    patternsWithValues: Array<[pattern: string, value: number]>
   ): NativeDaachorseStandardDictionary
 
   daachorseCreateForwardDictionary(patterns: string[]): NativeDaachorseForwardDictionary
-  daachorseCreateForwardDictionaryWithTfIdf(
-    patternsWithTfIdf: Array<[pattern: string, tfIdf: number]>
+  daachorseCreateForwardDictionaryWithValues(
+    patternsWithValues: Array<[pattern: string, value: number]>
   ): NativeDaachorseForwardDictionary
 
   daachorseCreateBackwardDictionary(patterns: string[]): NativeDaachorseBackwardDictionary
-  daachorseCreateBackwardDictionaryWithTfIdf(
-    patternsWithTfIdf: Array<[pattern: string, tfIdf: number]>
+  daachorseCreateBackwardDictionaryWithValues(
+    patternsWithValues: Array<[pattern: string, value: number]>
   ): NativeDaachorseBackwardDictionary
 
   daachorseSegmentFully(

@@ -137,9 +137,9 @@ dependencies = [
 
 [[package]]
 name = "ultra-nlp"
-version = "0.4.0"
+version = "0.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ee0dec14aa96448270a88add647a5282d6a7e48e8b1793d858238f7308d40ea7"
+checksum = "bf431fdb1682526f8f2fca53b6b369d43bd9f29205abfa7c2748ec286bd80d74"
 dependencies = [
  "cedarwood",
  "daachorse",

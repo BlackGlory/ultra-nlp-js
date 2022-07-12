@@ -16,8 +16,8 @@ describe('segmentBackwardLongest', () => {
     ])
   })
 
-  test('dictionary with tf-idf', () => {
-    const dict = BackwardDictionary.createWithTfIdf([['你好', 0.5], ['世界', 1.5]])
+  test('dictionary with values', () => {
+    const dict = BackwardDictionary.createWithValues([['你好', 0.5], ['世界', 1.5]])
 
     const result = segmentBackwardLongest('你好世界', dict, BehaviorForUnmatched.Ignore)
 

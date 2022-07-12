@@ -2,7 +2,7 @@ import { addon, NativeCedarwoodForwardDictionary } from '@src/addon'
 
 enum ForwardDictionaryConstructorKind {
   Patterns
-, PatternsWithTfIdf
+, PatternsWithValues
 }
 
 export class ForwardDictionary {
@@ -13,8 +13,8 @@ export class ForwardDictionary {
   , patterns: string[]
   )
   private constructor(
-    kind: ForwardDictionaryConstructorKind.PatternsWithTfIdf
-  , patternsWithTfIdf: Array<[pattern: string, tfIdf: number]>
+    kind: ForwardDictionaryConstructorKind.PatternsWithValues
+  , patternsWithValues: Array<[pattern: string, value: number]>
   )
   private constructor(...args:
   | [
@@ -22,8 +22,8 @@ export class ForwardDictionary {
     , patterns: string[]
     ]
   | [
-      kind: ForwardDictionaryConstructorKind.PatternsWithTfIdf
-    , patternsWithTfIdf: Array<[pattern: string, tfIdf: number]>
+      kind: ForwardDictionaryConstructorKind.PatternsWithValues
+    , patternsWithValues: Array<[pattern: string, value: number]>
     ]
   ) {
     const [kind, patterns] = args
@@ -31,8 +31,8 @@ export class ForwardDictionary {
       case ForwardDictionaryConstructorKind.Patterns:
         this.instance = addon.cedarwoodCreateForwardDictionary(patterns)
         break
-      case ForwardDictionaryConstructorKind.PatternsWithTfIdf:
-        this.instance = addon.cedarwoodCreateForwardDictionaryWithTfIdf(patterns)
+      case ForwardDictionaryConstructorKind.PatternsWithValues:
+        this.instance = addon.cedarwoodCreateForwardDictionaryWithValues(patterns)
         break
       default: throw new Error('Invalid kind')
     }
@@ -45,12 +45,12 @@ export class ForwardDictionary {
     )
   }
 
-  static createWithTfIdf(
-    patternsWithTfIdf: Array<[pattern: string, tfIdf: number]>
+  static createWithValues(
+    patternsWithValues: Array<[pattern: string, value: number]>
   ): ForwardDictionary {
     return new ForwardDictionary(
-      ForwardDictionaryConstructorKind.PatternsWithTfIdf
-    , patternsWithTfIdf
+      ForwardDictionaryConstructorKind.PatternsWithValues
+    , patternsWithValues
     )
   }
 }

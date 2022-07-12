@@ -25,11 +25,11 @@ enum BehaviorForUnmatched {
 class Match {
   constructor(
     range: TextRange
-  , tfIdf: number | null
+  , value: number | null
   )
 
   getRange(): TextRange
-  getTfIdf(): number | null
+  getValue(): number | null
 }
 ```
 
@@ -76,8 +76,8 @@ class ForwardDictionary {
   instance: NativeCedarwoodFowardDictionary
 
   static create(patterns: string[]): ForwardDictionary
-  static createWithTfIdf(
-    patternsWithTfIdf: Array<[pattern: string, tfIdf: number]>
+  static createWithValues(
+    patternsWithValues: Array<[pattern: string, value: number]>
   ): ForwardDictionary
 }
 ```
@@ -88,8 +88,8 @@ class BackwardDictionary {
   instance: NativeCedarwoodFowardDictionary
 
   static create(patterns: string[]): BackwardDictionary
-  static createWithTfIdf(
-    patternsWithTfIdf: Array<[pattern: string, tfIdf: number]>
+  static createWithValues(
+    patternsWithValues: Array<[pattern: string, value: number]>
   ): BackwardDictionary
 }
 ```
@@ -138,8 +138,8 @@ class StandardDictionary {
   instance: NativeDaachorseStandardDictionary
 
   static create(patterns: string[]): StandardDictionary
-  static createWithTfIdf(
-    patternsWithTfIdf: Array<[pattern: string, tfIdf: number]>
+  static createWithValues(
+    patternsWithValues: Array<[pattern: string, value: number]>
   ): StandardDictionary
 }
 ```
@@ -150,8 +150,8 @@ class ForwardDictionary {
   instance: NativeDaachorseFowardDictionary
 
   static create(patterns: string[]): ForwardDictionary
-  static createWithTfIdf(
-    patternsWithTfIdf: Array<[pattern: string, tfIdf: number]>
+  static createWithValues(
+    patternsWithValues: Array<[pattern: string, value: number]>
   ): ForwardDictionary
 }
 ```
@@ -162,8 +162,8 @@ class BackwardDictionary {
   instance: NativeDaachorseFowardDictionary
 
   static create(patterns: string[]): BackwardDictionary
-  static createWithTfIdf(
-    patternsWithTfIdf: Array<[pattern: string, tfIdf: number]>
+  static createWithValues(
+    patternsWithValues: Array<[pattern: string, value: number]>
   ): BackwardDictionary
 }
 ```

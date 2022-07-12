@@ -2,7 +2,7 @@ import { addon, NativeDaachorseStandardDictionary } from '@src/addon'
 
 enum StandardDictionaryConstructorKind {
   Patterns
-, PatternsWithTfIdf
+, PatternsWithValues
 }
 
 export class StandardDictionary {
@@ -13,8 +13,8 @@ export class StandardDictionary {
   , patterns: string[]
   )
   private constructor(
-    kind: StandardDictionaryConstructorKind.PatternsWithTfIdf
-  , patternsWithTfIdf: Array<[pattern: string, tfIdf: number]>
+    kind: StandardDictionaryConstructorKind.PatternsWithValues
+  , patternsWithValues: Array<[pattern: string, value: number]>
   )
   private constructor(...args:
   | [
@@ -22,8 +22,8 @@ export class StandardDictionary {
     , patterns: string[]
     ]
   | [
-      kind: StandardDictionaryConstructorKind.PatternsWithTfIdf
-    , patternsWithTfIdf: Array<[pattern: string, tfIdf: number]>
+      kind: StandardDictionaryConstructorKind.PatternsWithValues
+    , patternsWithValues: Array<[pattern: string, value: number]>
     ]
   ) {
     const [kind, patterns] = args
@@ -31,8 +31,8 @@ export class StandardDictionary {
       case StandardDictionaryConstructorKind.Patterns:
         this.instance = addon.daachorseCreateStandardDictionary(patterns)
         break
-      case StandardDictionaryConstructorKind.PatternsWithTfIdf:
-        this.instance = addon.daachorseCreateStandardDictionaryWithTfIdf(patterns)
+      case StandardDictionaryConstructorKind.PatternsWithValues:
+        this.instance = addon.daachorseCreateStandardDictionaryWithValues(patterns)
         break
       default: throw new Error('Invalid kind')
     }
@@ -45,12 +45,12 @@ export class StandardDictionary {
     )
   }
 
-  static createWithTfIdf(
-    patternsWithTfIdf: Array<[pattern: string, tfIdf: number]>
+  static createWithValues(
+    patternsWithValues: Array<[pattern: string, value: number]>
   ): StandardDictionary {
     return new StandardDictionary(
-      StandardDictionaryConstructorKind.PatternsWithTfIdf
-    , patternsWithTfIdf
+      StandardDictionaryConstructorKind.PatternsWithValues
+    , patternsWithValues
     )
   }
 }

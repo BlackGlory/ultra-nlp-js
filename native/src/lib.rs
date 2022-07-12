@@ -47,20 +47,20 @@ fn main(mut cx: ModuleContext) -> NeonResult<()> {
     // cx.export_function("extractKeywords", extract_keywords)?;
 
     cx.export_function("cedarwoodCreateForwardDictionary", cedarwood_create_forward_dictionary)?;
-    cx.export_function("cedarwoodCreateForwardDictionaryWithTfIdf", cedarwood_create_forward_dictionary_with_tf_idf)?;
+    cx.export_function("cedarwoodCreateForwardDictionaryWithValues", cedarwood_create_forward_dictionary_with_values)?;
     cx.export_function("cedarwoodCreateBackwardDictionary", cedarwood_create_backward_dictionary)?;
-    cx.export_function("cedarwoodCreateBackwardDictionaryWithTfIdf", cedarwood_create_backward_dictionary_with_tf_idf)?;
+    cx.export_function("cedarwoodCreateBackwardDictionaryWithValues", cedarwood_create_backward_dictionary_with_value)?;
     cx.export_function("cedarwoodSegmentFully", cedarwood_segment_fully)?;
     cx.export_function("cedarwoodSegmentForwardLongest", cedarwood_segment_forward_longsest)?;
     cx.export_function("cedarwoodSegmentBackwardLongest", cedarwood_segment_backward_longest)?;
     cx.export_function("cedarwoodSegmentBidirectionalLongest", cedarwood_segment_bidirectional_longest)?;
 
     cx.export_function("daachorseCreateStandardDictionary", daachorse_create_standard_dictionary)?;
-    cx.export_function("daachorseCreateStandardDictionaryWithTfIdf", daachorse_create_standard_dictionary_with_tf_idf)?;
+    cx.export_function("daachorseCreateStandardDictionaryWithValues", daachorse_create_standard_dictionary_with_values)?;
     cx.export_function("daachorseCreateForwardDictionary", daachorse_create_forward_dictionary)?;
-    cx.export_function("daachorseCreateForwardDictionaryWithTfIdf", daachorse_create_forward_dictionary_with_tf_idf)?;
+    cx.export_function("daachorseCreateForwardDictionaryWithValues", daachorse_create_forward_dictionary_with_values)?;
     cx.export_function("daachorseCreateBackwardDictionary", daachorse_create_backward_dictionary)?;
-    cx.export_function("daachorseCreateBackwardDictionaryWithTfIdf", daachorse_create_backward_dictionary_with_tf_idf)?;
+    cx.export_function("daachorseCreateBackwardDictionaryWithValues", daachorse_create_backward_dictionary_with_values)?;
     cx.export_function("daachorseSegmentFully", daachorse_segment_fully)?;
     cx.export_function("daachorseSegmentForwardLongest", daachorse_segment_forward_longsest)?;
     cx.export_function("daachorseSegmentBackwardLongest", daachorse_segment_backward_longest)?;
@@ -80,17 +80,17 @@ fn cedarwood_create_forward_dictionary(mut cx: FunctionContext) -> JsResult<JsBo
     }
 }
 
-// cedarwood.createForwardDictionaryWithTfIdf(
-//   patternsWithTfIdf: Array<[pattern: string, tfIdf: number]>
+// cedarwood.createForwardDictionaryWithValues(
+//   patternsWithValues: Array<[pattern: string, value: number]>
 // ): NativeCedarwoodForwardDictionary
-fn cedarwood_create_forward_dictionary_with_tf_idf(mut cx: FunctionContext) -> JsResult<JsBox<JsCedarwoodForwardDictionary>> {
-    let patterns_with_tf_idf = cx.argument::<JsArray>(0)?;
-    let patterns_with_tf_idf = patterns_with_tf_idf_to_vec(
+fn cedarwood_create_forward_dictionary_with_values(mut cx: FunctionContext) -> JsResult<JsBox<JsCedarwoodForwardDictionary>> {
+    let patterns_with_value = cx.argument::<JsArray>(0)?;
+    let patterns_with_value = patterns_with_value_to_vec(
         &mut cx,
-        patterns_with_tf_idf
+        patterns_with_value
     )?;
 
-    match cedarwood::ForwardDictionary::new_with_tf_idf(patterns_with_tf_idf) {
+    match cedarwood::ForwardDictionary::new_with_values(patterns_with_value) {
         Ok(dict) => Ok(cx.boxed(JsCedarwoodForwardDictionary { dict })),
         Err(err) => cx.throw_error(err.to_string())
     }
@@ -107,17 +107,17 @@ fn cedarwood_create_backward_dictionary(mut cx: FunctionContext) -> JsResult<JsB
     }
 }
 
-// cedarwood.createBackwardDictionaryWithTfIdf(
-//   patternsWithTfIdf: Array<[pattern: string, tfIdf: number]>
+// cedarwood.createBackwardDictionaryWithValues(
+//   patternsWithValues: Array<[pattern: string, value: number]>
 // ): NativeCedarwoodBackwardDictionary
-fn cedarwood_create_backward_dictionary_with_tf_idf(mut cx: FunctionContext) -> JsResult<JsBox<JsCedarwoodBackwardDictionary>> {
-    let patterns_with_tf_idf = cx.argument::<JsArray>(0)?;
-    let patterns_with_tf_idf = patterns_with_tf_idf_to_vec(
+fn cedarwood_create_backward_dictionary_with_value(mut cx: FunctionContext) -> JsResult<JsBox<JsCedarwoodBackwardDictionary>> {
+    let patterns_with_value = cx.argument::<JsArray>(0)?;
+    let patterns_with_value = patterns_with_value_to_vec(
         &mut cx,
-        patterns_with_tf_idf
+        patterns_with_value
     )?;
 
-    match cedarwood::BackwardDictionary::new_with_tf_idf(patterns_with_tf_idf) {
+    match cedarwood::BackwardDictionary::new_with_values(patterns_with_value) {
         Ok(dict) => Ok(cx.boxed(JsCedarwoodBackwardDictionary { dict })),
         Err(err) => cx.throw_error(err.to_string())
     }
@@ -247,19 +247,19 @@ fn daachorse_create_standard_dictionary(
     }
 }
 
-// daachorse.createStandardDictionaryWithTfIdf(
-//   patternsWithTfIdf: Array<[pattern: string, tfIdf: number]>
+// daachorse.createStandardDictionaryWithValues(
+//   patternsWithValues: Array<[pattern: string, value: number]>
 // ): NativeDaachorseStandardDictionary
-fn daachorse_create_standard_dictionary_with_tf_idf(
+fn daachorse_create_standard_dictionary_with_values(
     mut cx: FunctionContext
 ) -> JsResult<JsBox<JsDaachorseStandardDictionary>> {
-    let patterns_with_tf_idf = cx.argument::<JsArray>(0)?;
-    let patterns_with_tf_idf = patterns_with_tf_idf_to_vec(
+    let patterns_with_value = cx.argument::<JsArray>(0)?;
+    let patterns_with_value = patterns_with_value_to_vec(
         &mut cx,
-        patterns_with_tf_idf
+        patterns_with_value
     )?;
 
-    match daachorse::StandardDictionary::new_with_tf_idf(patterns_with_tf_idf) {
+    match daachorse::StandardDictionary::new_with_values(patterns_with_value) {
         Ok(dict) => Ok(cx.boxed(JsDaachorseStandardDictionary { dict })),
         Err(err) => cx.throw_error(err.to_string())
     }
@@ -276,17 +276,17 @@ fn daachorse_create_forward_dictionary(mut cx: FunctionContext) -> JsResult<JsBo
     }
 }
 
-// daachorse.createForwardDictionaryWithTfIdf(
-//   patternsWithTfIdf: Array<[pattern: string, tfIdf: number]>
+// daachorse.createForwardDictionaryWithValues(
+//   patternsWithValues: Array<[pattern: string, value: number]>
 // ): NativeDaachorseForwardDictionary
-fn daachorse_create_forward_dictionary_with_tf_idf(mut cx: FunctionContext) -> JsResult<JsBox<JsDaachorseForwardDictionary>> {
-    let patterns_with_tf_idf = cx.argument::<JsArray>(0)?;
-    let patterns_with_tf_idf = patterns_with_tf_idf_to_vec(
+fn daachorse_create_forward_dictionary_with_values(mut cx: FunctionContext) -> JsResult<JsBox<JsDaachorseForwardDictionary>> {
+    let patterns_with_value = cx.argument::<JsArray>(0)?;
+    let patterns_with_value = patterns_with_value_to_vec(
         &mut cx,
-        patterns_with_tf_idf
+        patterns_with_value
     )?;
 
-    match daachorse::ForwardDictionary::new_with_tf_idf(patterns_with_tf_idf) {
+    match daachorse::ForwardDictionary::new_with_values(patterns_with_value) {
         Ok(dict) => Ok(cx.boxed(JsDaachorseForwardDictionary { dict })),
         Err(err) => cx.throw_error(err.to_string())
     }
@@ -303,17 +303,17 @@ fn daachorse_create_backward_dictionary(mut cx: FunctionContext) -> JsResult<JsB
     }
 }
 
-// daachorse.createBackwardDictionaryWithTfIdf(
-//   patternsWithTfIdf: Array<[pattern: string, tfIdf: number]>
+// daachorse.createBackwardDictionaryWithValues(
+//   patternsWithValues: Array<[pattern: string, value: number]>
 // ): NativeDaachorseBackwardDictionary
-fn daachorse_create_backward_dictionary_with_tf_idf(mut cx: FunctionContext) -> JsResult<JsBox<JsDaachorseBackwardDictionary>> {
-    let patterns_with_tf_idf = cx.argument::<JsArray>(0)?;
-    let patterns_with_tf_idf = patterns_with_tf_idf_to_vec(
+fn daachorse_create_backward_dictionary_with_values(mut cx: FunctionContext) -> JsResult<JsBox<JsDaachorseBackwardDictionary>> {
+    let patterns_with_value = cx.argument::<JsArray>(0)?;
+    let patterns_with_value = patterns_with_value_to_vec(
         &mut cx,
-        patterns_with_tf_idf
+        patterns_with_value
     )?;
 
-    match daachorse::BackwardDictionary::new_with_tf_idf(patterns_with_tf_idf) {
+    match daachorse::BackwardDictionary::new_with_values(patterns_with_value) {
         Ok(dict) => Ok(cx.boxed(JsDaachorseBackwardDictionary { dict })),
         Err(err) => cx.throw_error(err.to_string())
     }
@@ -448,14 +448,14 @@ fn matches_to_js_array<'a>(
         range.set(cx, "endIndex", end_index)?;
 
         mat.set(cx, "range", range)?;
-        match obj.tf_idf() {
+        match obj.value() {
             Some(x) => {
-                let tf_idf = cx.number(x);
-                mat.set(cx, "tfIdf", tf_idf)?;
+                let value = cx.number(x);
+                mat.set(cx, "value", value)?;
             },
             None => {
-                let tf_idf = cx.null();
-                mat.set(cx, "tfIdf", tf_idf)?;
+                let value = cx.null();
+                mat.set(cx, "value", value)?;
             },
         };
 
@@ -465,11 +465,11 @@ fn matches_to_js_array<'a>(
     Ok(js_array)
 }
 
-fn patterns_with_tf_idf_to_vec(
+fn patterns_with_value_to_vec(
     cx: &mut FunctionContext,
-    patterns_with_tf_idf: Handle<JsArray>
+    patterns_with_value: Handle<JsArray>
 ) -> NeonResult<Vec<(String, f64)>> {
-    let result = patterns_with_tf_idf
+    let result = patterns_with_value
         .to_vec(cx)?
         .into_iter()
         .map(|x| -> Result<(String, f64), _> {
@@ -477,9 +477,9 @@ fn patterns_with_tf_idf_to_vec(
                 .or_throw(cx)
                 .map(|x| -> Result<(String, f64), _>{
                     let pattern = x.get::<JsString, _, _>(cx, 0)?.value(cx);
-                    let tf_idf = x.get::<JsNumber, _, _>(cx, 1)?.value(cx);
+                    let value = x.get::<JsNumber, _, _>(cx, 1)?.value(cx);
 
-                    Ok((pattern, tf_idf))
+                    Ok((pattern, value))
                 })?
         })
         .collect::<Result<Vec<_>, _>>()?;

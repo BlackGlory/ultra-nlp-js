@@ -24,10 +24,10 @@ describe('segmentBidirectionalLongest', () => {
     ])
   })
 
-  test('dictionary with tf-idf', () => {
-    const patternsWithTfIdf: Array<[string, number]>= [['你好', 0.5], ['世界', 1.5]]
-    const forwardDict = ForwardDictionary.createWithTfIdf(patternsWithTfIdf)
-    const backwardDict = BackwardDictionary.createWithTfIdf(patternsWithTfIdf)
+  test('dictionary with values', () => {
+    const patternsWithValues: Array<[string, number]>= [['你好', 0.5], ['世界', 1.5]]
+    const forwardDict = ForwardDictionary.createWithValues(patternsWithValues)
+    const backwardDict = BackwardDictionary.createWithValues(patternsWithValues)
 
     const result = segmentBidirectionalLongest(
       '你好世界'
