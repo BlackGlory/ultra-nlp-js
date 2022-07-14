@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.4.0](https://github.com/BlackGlory/ultra-nlp-js/compare/v0.3.0...v0.4.0) (2022-07-14)
+
+
+### ⚠ BREAKING CHANGES
+
+* upgrade to ultra-nlp v0.6.0
+
+* upgrade to ultra-nlp v0.6.0 ([55689ea](https://github.com/BlackGlory/ultra-nlp-js/commit/55689eaac27d7a3a141a9665e71120ef413d2783))
+
 ## [0.3.0](https://github.com/BlackGlory/ultra-nlp-js/compare/v0.2.0...v0.3.0) (2022-07-12)
 
 
