@@ -29,7 +29,7 @@ class Match {
   )
 
   getRange(): TextRange
-  getIndexOfPatterns: number | null
+  getIndexOfPatterns(): number | null
   getValueFrom<T>(map: Record<number, T>): T | null
 }
 ```
