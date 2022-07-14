@@ -6,7 +6,15 @@ describe('StandardDictionary', () => {
     test('empty patterns', () => {
       const patterns: string[] = []
 
-      const err = getError(() => StandardDictionary.create(patterns))
+      const err = getError(() => new StandardDictionary(patterns))
+
+      expect(err).not.toBeUndefined()
+    })
+
+    test('same patterns', () => {
+      const patterns = ['foo', 'foo']
+
+      const err = getError(() => new StandardDictionary(patterns))
 
       expect(err).not.toBeUndefined()
     })
@@ -14,23 +22,7 @@ describe('StandardDictionary', () => {
     test('patterns', () => {
       const patterns = ['foo', 'bar']
 
-      StandardDictionary.create(patterns)
-    })
-  })
-
-  describe('createWithValues', () => {
-    test('create with empty patterns with values', () => {
-      const patterns: Array<[string, number]> = []
-
-      const err = getError(() => StandardDictionary.createWithValues(patterns))
-
-      expect(err).not.toBeUndefined()
-    })
-
-    test('create with patterns with values', () => {
-      const patterns: Array<[string, number]> = [['foo', 1], ['bar', 2]]
-
-      StandardDictionary.createWithValues(patterns)
+      new StandardDictionary(patterns)
     })
   })
 })

@@ -6,7 +6,15 @@ describe('ForwardDictionary', () => {
     test('empty patterns', () => {
       const patterns: string[] = []
 
-      const err = getError(() => ForwardDictionary.create(patterns))
+      const err = getError(() => new ForwardDictionary(patterns))
+
+      expect(err).not.toBeUndefined()
+    })
+
+    test('same patterns', () => {
+      const patterns = ['foo', 'foo']
+
+      const err = getError(() => new ForwardDictionary(patterns))
 
       expect(err).not.toBeUndefined()
     })
@@ -14,23 +22,7 @@ describe('ForwardDictionary', () => {
     test('patterns', () => {
       const patterns = ['foo', 'bar']
 
-      ForwardDictionary.create(patterns)
-    })
-  })
-
-  describe('createWithValues', () => {
-    test('create with empty patterns with values', () => {
-      const patterns: Array<[string, number]> = []
-
-      const err = getError(() => ForwardDictionary.createWithValues(patterns))
-
-      expect(err).not.toBeUndefined()
-    })
-
-    test('create with patterns with values', () => {
-      const patterns: Array<[string, number]> = [['foo', 1], ['bar', 2]]
-
-      ForwardDictionary.createWithValues(patterns)
+      new ForwardDictionary(patterns)
     })
   })
 })

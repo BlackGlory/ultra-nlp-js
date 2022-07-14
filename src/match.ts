@@ -1,16 +1,24 @@
 import { TextRange } from './text-range'
+import { isntNull } from '@blackglory/prelude'
 
 export class Match {
   constructor(
     private range: TextRange
-  , private value: number | null
+  , private indexOfPatterns: number | null
   ) {}
 
   getRange(): TextRange {
     return this.range
   }
 
-  getValue(): number | null {
-    return this.value
+  getIndexOfPatterns(): number | null {
+    return this.indexOfPatterns
+  }
+
+  getValueFrom<T>(map: Record<number, T>): T | null {
+    if (isntNull(this.indexOfPatterns)) {
+      if (this.indexOfPatterns in map) return map[this.indexOfPatterns]
+    }
+    return null
   }
 }

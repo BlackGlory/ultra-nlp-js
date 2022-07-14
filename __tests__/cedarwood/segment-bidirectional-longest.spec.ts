@@ -8,8 +8,8 @@ import { TextRange } from '@src/text-range'
 describe('segmentBidirectionalLongest', () => {
   test('dictionary', () => {
     const patterns = ['你好', '世界']
-    const forwardDict = ForwardDictionary.create(patterns)
-    const backwardDict = BackwardDictionary.create(patterns)
+    const forwardDict = new ForwardDictionary(patterns)
+    const backwardDict = new BackwardDictionary(patterns)
 
     const result = segmentBidirectionalLongest(
       '你好世界'
@@ -19,26 +19,8 @@ describe('segmentBidirectionalLongest', () => {
     )
 
     expect(result).toEqual([
-      new Match(new TextRange(0, 6), null)
-    , new Match(new TextRange(6, 12), null)
-    ])
-  })
-
-  test('dictionary with values', () => {
-    const patternsWithValues: Array<[string, number]>= [['你好', 0.5], ['世界', 1.5]]
-    const forwardDict = ForwardDictionary.createWithValues(patternsWithValues)
-    const backwardDict = BackwardDictionary.createWithValues(patternsWithValues)
-
-    const result = segmentBidirectionalLongest(
-      '你好世界'
-    , forwardDict
-    , backwardDict
-    , BehaviorForUnmatched.Ignore
-    )
-
-    expect(result).toEqual([
-      new Match(new TextRange(0, 6), 0.5)
-    , new Match(new TextRange(6, 12), 1.5)
+      new Match(new TextRange(0, 6), 0)
+    , new Match(new TextRange(6, 12), 1)
     ])
   })
 })

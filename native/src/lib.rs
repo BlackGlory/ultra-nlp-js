@@ -44,23 +44,16 @@ fn main(mut cx: ModuleContext) -> NeonResult<()> {
     behavior_for_unmatched.set(&mut cx, "KeepAsChars", keep_as_chars)?;
     cx.export_value("BehaviorForUnmatched", behavior_for_unmatched)?;
 
-    // cx.export_function("extractKeywords", extract_keywords)?;
-
     cx.export_function("cedarwoodCreateForwardDictionary", cedarwood_create_forward_dictionary)?;
-    cx.export_function("cedarwoodCreateForwardDictionaryWithValues", cedarwood_create_forward_dictionary_with_values)?;
     cx.export_function("cedarwoodCreateBackwardDictionary", cedarwood_create_backward_dictionary)?;
-    cx.export_function("cedarwoodCreateBackwardDictionaryWithValues", cedarwood_create_backward_dictionary_with_value)?;
     cx.export_function("cedarwoodSegmentFully", cedarwood_segment_fully)?;
     cx.export_function("cedarwoodSegmentForwardLongest", cedarwood_segment_forward_longsest)?;
     cx.export_function("cedarwoodSegmentBackwardLongest", cedarwood_segment_backward_longest)?;
     cx.export_function("cedarwoodSegmentBidirectionalLongest", cedarwood_segment_bidirectional_longest)?;
 
     cx.export_function("daachorseCreateStandardDictionary", daachorse_create_standard_dictionary)?;
-    cx.export_function("daachorseCreateStandardDictionaryWithValues", daachorse_create_standard_dictionary_with_values)?;
     cx.export_function("daachorseCreateForwardDictionary", daachorse_create_forward_dictionary)?;
-    cx.export_function("daachorseCreateForwardDictionaryWithValues", daachorse_create_forward_dictionary_with_values)?;
     cx.export_function("daachorseCreateBackwardDictionary", daachorse_create_backward_dictionary)?;
-    cx.export_function("daachorseCreateBackwardDictionaryWithValues", daachorse_create_backward_dictionary_with_values)?;
     cx.export_function("daachorseSegmentFully", daachorse_segment_fully)?;
     cx.export_function("daachorseSegmentForwardLongest", daachorse_segment_forward_longsest)?;
     cx.export_function("daachorseSegmentBackwardLongest", daachorse_segment_backward_longest)?;
@@ -80,44 +73,12 @@ fn cedarwood_create_forward_dictionary(mut cx: FunctionContext) -> JsResult<JsBo
     }
 }
 
-// cedarwood.createForwardDictionaryWithValues(
-//   patternsWithValues: Array<[pattern: string, value: number]>
-// ): NativeCedarwoodForwardDictionary
-fn cedarwood_create_forward_dictionary_with_values(mut cx: FunctionContext) -> JsResult<JsBox<JsCedarwoodForwardDictionary>> {
-    let patterns_with_value = cx.argument::<JsArray>(0)?;
-    let patterns_with_value = patterns_with_value_to_vec(
-        &mut cx,
-        patterns_with_value
-    )?;
-
-    match cedarwood::ForwardDictionary::new_with_values(patterns_with_value) {
-        Ok(dict) => Ok(cx.boxed(JsCedarwoodForwardDictionary { dict })),
-        Err(err) => cx.throw_error(err.to_string())
-    }
-}
-
 // cedarwood.createBackwardDictionary(patterns: string[]): NativeCedarwoodBackwardDictionary
 fn cedarwood_create_backward_dictionary(mut cx: FunctionContext) -> JsResult<JsBox<JsCedarwoodBackwardDictionary>> {
     let patterns = cx.argument::<JsArray>(0)?;
     let patterns = js_array_to_vec_string(&mut cx, patterns)?;
 
     match cedarwood::BackwardDictionary::new(patterns) {
-        Ok(dict) => Ok(cx.boxed(JsCedarwoodBackwardDictionary { dict })),
-        Err(err) => cx.throw_error(err.to_string())
-    }
-}
-
-// cedarwood.createBackwardDictionaryWithValues(
-//   patternsWithValues: Array<[pattern: string, value: number]>
-// ): NativeCedarwoodBackwardDictionary
-fn cedarwood_create_backward_dictionary_with_value(mut cx: FunctionContext) -> JsResult<JsBox<JsCedarwoodBackwardDictionary>> {
-    let patterns_with_value = cx.argument::<JsArray>(0)?;
-    let patterns_with_value = patterns_with_value_to_vec(
-        &mut cx,
-        patterns_with_value
-    )?;
-
-    match cedarwood::BackwardDictionary::new_with_values(patterns_with_value) {
         Ok(dict) => Ok(cx.boxed(JsCedarwoodBackwardDictionary { dict })),
         Err(err) => cx.throw_error(err.to_string())
     }
@@ -247,24 +208,6 @@ fn daachorse_create_standard_dictionary(
     }
 }
 
-// daachorse.createStandardDictionaryWithValues(
-//   patternsWithValues: Array<[pattern: string, value: number]>
-// ): NativeDaachorseStandardDictionary
-fn daachorse_create_standard_dictionary_with_values(
-    mut cx: FunctionContext
-) -> JsResult<JsBox<JsDaachorseStandardDictionary>> {
-    let patterns_with_value = cx.argument::<JsArray>(0)?;
-    let patterns_with_value = patterns_with_value_to_vec(
-        &mut cx,
-        patterns_with_value
-    )?;
-
-    match daachorse::StandardDictionary::new_with_values(patterns_with_value) {
-        Ok(dict) => Ok(cx.boxed(JsDaachorseStandardDictionary { dict })),
-        Err(err) => cx.throw_error(err.to_string())
-    }
-}
-
 // daachorse.createForwardDictionary(patterns: string[]): NativeDaachorseForwardDictionary
 fn daachorse_create_forward_dictionary(mut cx: FunctionContext) -> JsResult<JsBox<JsDaachorseForwardDictionary>> {
     let patterns = cx.argument::<JsArray>(0)?;
@@ -276,44 +219,12 @@ fn daachorse_create_forward_dictionary(mut cx: FunctionContext) -> JsResult<JsBo
     }
 }
 
-// daachorse.createForwardDictionaryWithValues(
-//   patternsWithValues: Array<[pattern: string, value: number]>
-// ): NativeDaachorseForwardDictionary
-fn daachorse_create_forward_dictionary_with_values(mut cx: FunctionContext) -> JsResult<JsBox<JsDaachorseForwardDictionary>> {
-    let patterns_with_value = cx.argument::<JsArray>(0)?;
-    let patterns_with_value = patterns_with_value_to_vec(
-        &mut cx,
-        patterns_with_value
-    )?;
-
-    match daachorse::ForwardDictionary::new_with_values(patterns_with_value) {
-        Ok(dict) => Ok(cx.boxed(JsDaachorseForwardDictionary { dict })),
-        Err(err) => cx.throw_error(err.to_string())
-    }
-}
-
 // daachorse.createBackwardDictionary(patterns: string[]): NativeDaachorseBackwardDictionary
 fn daachorse_create_backward_dictionary(mut cx: FunctionContext) -> JsResult<JsBox<JsDaachorseBackwardDictionary>> {
     let patterns = cx.argument::<JsArray>(0)?;
     let patterns = js_array_to_vec_string(&mut cx, patterns)?;
 
     match daachorse::BackwardDictionary::new(patterns) {
-        Ok(dict) => Ok(cx.boxed(JsDaachorseBackwardDictionary { dict })),
-        Err(err) => cx.throw_error(err.to_string())
-    }
-}
-
-// daachorse.createBackwardDictionaryWithValues(
-//   patternsWithValues: Array<[pattern: string, value: number]>
-// ): NativeDaachorseBackwardDictionary
-fn daachorse_create_backward_dictionary_with_values(mut cx: FunctionContext) -> JsResult<JsBox<JsDaachorseBackwardDictionary>> {
-    let patterns_with_value = cx.argument::<JsArray>(0)?;
-    let patterns_with_value = patterns_with_value_to_vec(
-        &mut cx,
-        patterns_with_value
-    )?;
-
-    match daachorse::BackwardDictionary::new_with_values(patterns_with_value) {
         Ok(dict) => Ok(cx.boxed(JsDaachorseBackwardDictionary { dict })),
         Err(err) => cx.throw_error(err.to_string())
     }
@@ -430,9 +341,6 @@ fn daachorse_segment_bidirectional_longest(mut cx: FunctionContext) -> JsResult<
     Ok(js_array)
 }
 
-// extractKeywords(matches: IMatch[], top: number): IMatch[]
-// fn extract_keywords(mut cx: FunctionContext) -> JsResult<JsArray> {}
-
 fn matches_to_js_array<'a>(
     cx: &mut FunctionContext<'a>,
     matches: Vec<Match>
@@ -448,14 +356,14 @@ fn matches_to_js_array<'a>(
         range.set(cx, "endIndex", end_index)?;
 
         mat.set(cx, "range", range)?;
-        match obj.value() {
+        match obj.index_of_patterns() {
             Some(x) => {
                 let value = cx.number(x);
-                mat.set(cx, "value", value)?;
+                mat.set(cx, "indexOfPatterns", value)?;
             },
             None => {
                 let value = cx.null();
-                mat.set(cx, "value", value)?;
+                mat.set(cx, "indexOfPatterns", value)?;
             },
         };
 
@@ -463,28 +371,6 @@ fn matches_to_js_array<'a>(
     }
 
     Ok(js_array)
-}
-
-fn patterns_with_value_to_vec(
-    cx: &mut FunctionContext,
-    patterns_with_value: Handle<JsArray>
-) -> NeonResult<Vec<(String, f64)>> {
-    let result = patterns_with_value
-        .to_vec(cx)?
-        .into_iter()
-        .map(|x| -> Result<(String, f64), _> {
-            x.downcast::<JsArray, _>(cx)
-                .or_throw(cx)
-                .map(|x| -> Result<(String, f64), _>{
-                    let pattern = x.get::<JsString, _, _>(cx, 0)?.value(cx);
-                    let value = x.get::<JsNumber, _, _>(cx, 1)?.value(cx);
-
-                    Ok((pattern, value))
-                })?
-        })
-        .collect::<Result<Vec<_>, _>>()?;
-
-    Ok(result)
 }
 
 fn js_array_to_vec_string(

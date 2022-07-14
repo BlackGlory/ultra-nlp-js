@@ -29,7 +29,8 @@ class Match {
   )
 
   getRange(): TextRange
-  getValue(): number | null
+  getIndexOfPatterns: number | null
+  getValueFrom<T>(map: Record<number, T>): T | null
 }
 ```
 
@@ -64,21 +65,13 @@ class TextRange {
 }
 ```
 
-### extractKeywords
-```ts
-function extractKeywords(matches: Match[], top: number): Match[]
-```
-
 ### cedarwood
 #### ForwardDictionary
 ```ts
 class ForwardDictionary {
   instance: NativeCedarwoodFowardDictionary
 
-  static create(patterns: string[]): ForwardDictionary
-  static createWithValues(
-    patternsWithValues: Array<[pattern: string, value: number]>
-  ): ForwardDictionary
+  constructor(patterns: string[])
 }
 ```
 
@@ -87,10 +80,7 @@ class ForwardDictionary {
 class BackwardDictionary {
   instance: NativeCedarwoodFowardDictionary
 
-  static create(patterns: string[]): BackwardDictionary
-  static createWithValues(
-    patternsWithValues: Array<[pattern: string, value: number]>
-  ): BackwardDictionary
+  constructor(patterns: string[])
 }
 ```
 
@@ -137,10 +127,7 @@ function segmentBidirectionalLongest(
 class StandardDictionary {
   instance: NativeDaachorseStandardDictionary
 
-  static create(patterns: string[]): StandardDictionary
-  static createWithValues(
-    patternsWithValues: Array<[pattern: string, value: number]>
-  ): StandardDictionary
+  constructor(patterns: string[])
 }
 ```
 
@@ -149,10 +136,7 @@ class StandardDictionary {
 class ForwardDictionary {
   instance: NativeDaachorseFowardDictionary
 
-  static create(patterns: string[]): ForwardDictionary
-  static createWithValues(
-    patternsWithValues: Array<[pattern: string, value: number]>
-  ): ForwardDictionary
+  constructor(patterns: string[])
 }
 ```
 
@@ -161,10 +145,7 @@ class ForwardDictionary {
 class BackwardDictionary {
   instance: NativeDaachorseFowardDictionary
 
-  static create(patterns: string[]): BackwardDictionary
-  static createWithValues(
-    patternsWithValues: Array<[pattern: string, value: number]>
-  ): BackwardDictionary
+  constructor(patterns: string[])
 }
 ```
 
