@@ -4,6 +4,7 @@ use ultra_nlp::{
     BehaviorForUnmatched,
     cedarwood,
     daachorse,
+    hashmap,
 };
 
 struct JsCedarwoodForwardDictionary {
@@ -33,6 +34,12 @@ impl Finalize for JsDaachorseStandardDictionary {}
 impl Finalize for JsDaachorseForwardDictionary {}
 impl Finalize for JsDaachorseBackwardDictionary {}
 
+struct JsHashmapDictionary {
+    dict: hashmap::Dictionary,
+}
+
+impl Finalize for JsHashmapDictionary {}
+
 #[neon::main]
 fn main(mut cx: ModuleContext) -> NeonResult<()> {
     let behavior_for_unmatched = cx.empty_object();
@@ -58,6 +65,12 @@ fn main(mut cx: ModuleContext) -> NeonResult<()> {
     cx.export_function("daachorseSegmentForwardLongest", daachorse_segment_forward_longsest)?;
     cx.export_function("daachorseSegmentBackwardLongest", daachorse_segment_backward_longest)?;
     cx.export_function("daachorseSegmentBidirectionalLongest", daachorse_segment_bidirectional_longest)?;
+
+    cx.export_function("hashmapCreateDictionary", hashmap_create_dictionary)?;
+    cx.export_function("hashmapSegmentFully", hashmap_segment_fully)?;
+    cx.export_function("hashmapSegmentForwardLongest", hashmap_segment_forward_longsest)?;
+    cx.export_function("hashmapSegmentBackwardLongest", hashmap_segment_backward_longest)?;
+    cx.export_function("hashmapSegmentBidirectionalLongest", hashmap_segment_bidirectional_longest)?;
 
     Ok(())
 }
@@ -333,6 +346,125 @@ fn daachorse_segment_bidirectional_longest(mut cx: FunctionContext) -> JsResult<
         text,
         forward_dict,
         backward_dict,
+        behavior_for_unmatched
+    );
+
+    let js_array = matches_to_js_array(&mut cx, matches)?;
+
+    Ok(js_array)
+}
+
+// hashmap.createDictionary(patterns: string[]): NativeHashmapDictionary
+fn hashmap_create_dictionary(mut cx: FunctionContext) -> JsResult<JsBox<JsHashmapDictionary>> {
+    let patterns = cx.argument::<JsArray>(0)?;
+    let patterns = js_array_to_vec_string(&mut cx, patterns)?;
+
+    match hashmap::Dictionary::new(patterns) {
+        Ok(dict) =>Ok(cx.boxed(JsHashmapDictionary { dict })),
+        Err(err) => cx.throw_error(err.to_string())
+    }
+}
+
+// hashmap.segmentFully(
+//   text: string
+// , dict: NativeHashmapDictionary
+// , behaviorForUnmatched: BehaviorForUnmatched
+// ): IMatch[]
+fn hashmap_segment_fully(mut cx: FunctionContext) -> JsResult<JsArray> {
+    let text = cx.argument::<JsString>(0)?;
+    let text = js_string_to_string(&mut cx, text)?;
+
+    let dict = &cx.argument::<JsBox<JsHashmapDictionary>>(1)?.dict;
+
+    let behavior_for_unmatched = cx.argument::<JsNumber>(2)?;
+    let behavior_for_unmatched = js_number_to_behavior_for_unmatched(
+        &mut cx,
+        behavior_for_unmatched
+    )?;
+
+    let matches = hashmap::segment_fully(
+        text,
+        dict,
+        behavior_for_unmatched
+    );
+
+    let js_array = matches_to_js_array(&mut cx, matches)?;
+
+    Ok(js_array)
+}
+
+// hashmap.segmentForwardLongest(
+//   text: string
+// , dict: NativeHashmapDictionary
+// , behaviorForUnmatched: BehaviorForUnmatched
+// ): IMatch[]
+fn hashmap_segment_forward_longsest(mut cx: FunctionContext) -> JsResult<JsArray> {
+    let text = cx.argument::<JsString>(0)?;
+    let text = js_string_to_string(&mut cx, text)?;
+
+    let dict = &cx.argument::<JsBox<JsHashmapDictionary>>(1)?.dict;
+
+    let behavior_for_unmatched = cx.argument::<JsNumber>(2)?;
+    let behavior_for_unmatched = js_number_to_behavior_for_unmatched(
+        &mut cx,
+        behavior_for_unmatched
+    )?;
+
+    let matches = hashmap::segment_forward_longest(
+        text,
+        dict,
+        behavior_for_unmatched
+    );
+
+    let js_array = matches_to_js_array(&mut cx, matches)?;
+
+    Ok(js_array)
+}
+
+// hashmap.segmentBackwardLongest(
+//   text: string
+// , dict: NativeHashmapDictionary
+// , behaviorForUnmatched: BehaviorForUnmatched
+// ): IMatch[]
+fn hashmap_segment_backward_longest(mut cx: FunctionContext) -> JsResult<JsArray> {
+    let text = cx.argument::<JsString>(0)?;
+    let text = js_string_to_string(&mut cx, text)?;
+
+    let dict = &cx.argument::<JsBox<JsHashmapDictionary>>(1)?.dict;
+
+    let behavior_for_unmatched = cx.argument::<JsNumber>(2)?;
+    let behavior_for_unmatched = js_number_to_behavior_for_unmatched(
+        &mut cx,
+        behavior_for_unmatched
+    )?;
+
+    let matches = hashmap::segment_backward_longest(text, dict, behavior_for_unmatched);
+
+    let js_array = matches_to_js_array(&mut cx, matches)?;
+
+    Ok(js_array)
+}
+
+// hashmap.segmentBidirectionalLongest(
+//   text: string
+// , dict: NativeHashmapDictionary
+// , behaviorForUnmatched: BehaviorForUnmatched
+// ): IMatch[]
+fn hashmap_segment_bidirectional_longest(mut cx: FunctionContext) -> JsResult<JsArray> {
+    let text = cx.argument::<JsString>(0)?;
+    let text = js_string_to_string(&mut cx, text)?;
+
+    let dict = &cx.argument::<JsBox<JsHashmapDictionary>>(1)?.dict;
+
+    let behavior_for_unmatched = cx.argument::<JsNumber>(2)?;
+    let behavior_for_unmatched = js_number_to_behavior_for_unmatched(
+        &mut cx,
+        behavior_for_unmatched
+    )?;
+
+    let matches = hashmap::segment_bidirectional_longest(
+        text,
+        dict,
         behavior_for_unmatched
     );
 

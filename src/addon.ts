@@ -5,6 +5,8 @@ export type NativeDaachorseStandardDictionary = unknown
 export type NativeDaachorseForwardDictionary = unknown
 export type NativeDaachorseBackwardDictionary = unknown
 
+export type NativeHashmapDictionary = unknown
+
 export interface IMatch {
   range: ITextRange
   indexOfPatterns: number | null
@@ -76,6 +78,32 @@ interface IAddon {
     text: string
   , forwardDict: NativeDaachorseForwardDictionary
   , backwardDict: NativeDaachorseBackwardDictionary
+  , behaviorForUnmatched: number
+  ): IMatch[]
+
+  hashmapCreateDictionary(patterns: string[]): NativeHashmapDictionary
+
+  hashmapSegmentFully(
+    text: string
+  , dict: NativeHashmapDictionary
+  , behaviorForUnmatched: number
+  ): IMatch[]
+
+  hashmapSegmentForwardLongest(
+    text: string
+  , dict: NativeHashmapDictionary
+  , behaviorForUnmatched: number
+  ): IMatch[]
+
+  hashmapSegmentBackwardLongest(
+    text: string
+  , dict: NativeHashmapDictionary
+  , behaviorForUnmatched: number
+  ): IMatch[]
+
+  hashmapSegmentBidirectionalLongest(
+    text: string
+  , dict: NativeHashmapDictionary
   , behaviorForUnmatched: number
   ): IMatch[]
 }

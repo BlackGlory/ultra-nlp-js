@@ -185,3 +185,49 @@ function segmentBidirectionalLongest(
 , behaviorForUnmatched: BehaviorForUnmatched
 ): Match[]
 ```
+
+### hashmap
+#### Dictionary
+```ts
+class Dictionary {
+  instance: NativeHashmapDictionary
+
+  constructor(patterns: string[])
+}
+```
+
+#### segmentFull
+```ts
+function segmentFull(
+  text: string
+, dict: Dictionary
+, behaviorForUnmatched: BehaviorForUnmatched
+): Match[]
+```
+
+#### segmentForwardLongest
+```ts
+function segmentForwardLongest(
+  text: string
+, dict: Dictionary
+, behaviorForUnmatched: BehaviorForUnmatched
+): Match[]
+```
+
+#### segmentBackwardLongest
+```ts
+function segmentBackwardLongest(
+  text: string
+, dict: Dictionary
+, behaviorForUnmatched: BehaviorForUnmatched
+): Match[]
+```
+
+#### segmentBidirectionalLongest
+```ts
+function segmentBidirectionalLongest(
+  text: string
+, dict: Dictionary
+, behaviorForUnmatched: BehaviorForUnmatched
+): Match[]
+```

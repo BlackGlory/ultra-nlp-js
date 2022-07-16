@@ -11,6 +11,7 @@
       "@src/*": ["src/*"]
     , "@cedarwood/*": ["src/cedarwood/*"]
     , "@daachorse/*": ["src/daachorse/*"]
+    , "@hashmap/*": ["src/hashmap/*"]
     , "@test/*": ["__tests__/*"]
     }
   }
