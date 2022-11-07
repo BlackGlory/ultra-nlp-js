@@ -25,7 +25,7 @@ enum BehaviorForUnmatched {
 class Match {
   constructor(
     range: TextRange
-  , value: number | null
+  , indexOfPatterns: number | null
   )
 
   getRange(): TextRange
