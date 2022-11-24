@@ -22,7 +22,10 @@ enum BehaviorForUnmatched {
 
 ### Match
 ```ts
-class Match {
+class Match implements Jsonable<{
+  range: TextRange
+  indexOfPatterns: number | null
+}> {
   constructor(
     range: TextRange
   , indexOfPatterns: number | null
@@ -36,7 +39,10 @@ class Match {
 
 ### TextRange
 ```ts
-class TextRange {
+class TextRange implements Jsonable<{
+  startIndex: number
+  endIndex: number
+}> {
   /**
    * @param startIndex byte index
    * @param endIndex byte index

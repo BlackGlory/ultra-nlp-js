@@ -1,9 +1,13 @@
 import { lazy } from 'extra-lazy'
+import { Jsonable } from 'justypes'
 
 const getEncoder = lazy(() => new TextEncoder())
 const getDecoder = lazy(() => new TextDecoder())
 
-export class TextRange {
+export class TextRange implements Jsonable<{
+  startIndex: number
+  endIndex: number
+}> {
   /**
    * @param startIndex byte index
    * @param endIndex byte index
@@ -12,6 +16,16 @@ export class TextRange {
     private startIndex: number
   , private endIndex: number
   ) {}
+
+  toJSON(): {
+    startIndex: number
+    endIndex: number
+  } {
+    return {
+      startIndex: this.startIndex
+    , endIndex: this.endIndex
+    }
+  }
 
   /**
    * @returns byte index

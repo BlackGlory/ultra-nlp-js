@@ -1,11 +1,25 @@
 import { TextRange } from './text-range'
 import { isntNull } from '@blackglory/prelude'
+import { Jsonable } from 'justypes'
 
-export class Match {
+export class Match implements Jsonable<{
+  range: TextRange
+  indexOfPatterns: number | null
+}> {
   constructor(
     private range: TextRange
   , private indexOfPatterns: number | null
   ) {}
+
+  toJSON(): {
+    range: TextRange
+    indexOfPatterns: number | null
+  } {
+    return {
+      range: this.range
+    , indexOfPatterns: this.indexOfPatterns
+    }
+  }
 
   getRange(): TextRange {
     return this.range
