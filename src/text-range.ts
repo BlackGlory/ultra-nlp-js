@@ -49,7 +49,10 @@ export class TextRange implements Jsonable<{
   }
 
   extract(text: string): string {
-    const utf8Array = getEncoder().encode(text).slice(0, 6)
+    const utf8Array = getEncoder().encode(text).slice(
+      this.startIndex
+    , this.endIndex
+    )
     return getDecoder().decode(utf8Array)
   }
 }
