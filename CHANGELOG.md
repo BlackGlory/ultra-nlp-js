@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.3](https://github.com/BlackGlory/ultra-nlp-js/compare/v0.4.2...v0.4.3) (2022-11-24)
+
+
+### Features
+
+* export `Match`, `TextRange` ([63ac5f4](https://github.com/BlackGlory/ultra-nlp-js/commit/63ac5f481e75ab2b45b35e594b015c6866cb2d1c))
+
 ### [0.4.2](https://github.com/BlackGlory/ultra-nlp-js/compare/v0.4.1...v0.4.2) (2022-08-01)
 
 ### [0.4.1](https://github.com/BlackGlory/ultra-nlp-js/compare/v0.4.0...v0.4.1) (2022-07-16)
