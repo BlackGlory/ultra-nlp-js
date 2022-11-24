@@ -1,8 +1,4 @@
-import { lazy } from 'extra-lazy'
 import { Jsonable } from 'justypes'
-
-const getEncoder = lazy(() => new TextEncoder())
-const getDecoder = lazy(() => new TextDecoder())
 
 export class TextRange implements Jsonable<{
   startIndex: number
@@ -49,10 +45,8 @@ export class TextRange implements Jsonable<{
   }
 
   extract(text: string): string {
-    const utf8Array = getEncoder().encode(text).slice(
-      this.startIndex
-    , this.endIndex
-    )
-    return getDecoder().decode(utf8Array)
+    return Buffer.from(text, 'utf-8')
+      .slice(this.startIndex, this.endIndex)
+      .toString()
   }
 }
