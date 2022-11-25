@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.4](https://github.com/BlackGlory/ultra-nlp-js/compare/v0.4.3...v0.4.4) (2022-11-25)
+
+
+### Features
+
+* add Buffer support for extract ([3859b5e](https://github.com/BlackGlory/ultra-nlp-js/commit/3859b5e9dee46b66e7b102899489ee381f3e0650))
+
+
+### Bug Fixes
+
+* extract ([fd84713](https://github.com/BlackGlory/ultra-nlp-js/commit/fd84713af46578d74f555a1dc3ddbac3e14ccd37))
+
 ### [0.4.3](https://github.com/BlackGlory/ultra-nlp-js/compare/v0.4.2...v0.4.3) (2022-11-24)
 
 
