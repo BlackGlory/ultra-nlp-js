@@ -67,6 +67,7 @@ class TextRange implements Jsonable<{
    */
   len(): number
 
+  extract(bufferUTF8: Buffer): string
   extract(text: string): string
 }
 ```

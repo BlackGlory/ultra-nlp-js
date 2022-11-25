@@ -1,4 +1,5 @@
 import { Jsonable } from 'justypes'
+import { isString } from '@blackglory/prelude'
 
 export class TextRange implements Jsonable<{
   startIndex: number
@@ -44,9 +45,15 @@ export class TextRange implements Jsonable<{
     return this.endIndex - this.startIndex
   }
 
-  extract(text: string): string {
-    return Buffer.from(text, 'utf-8')
+  extract(bufferUTF8: Buffer): string
+  extract(text: string): string
+  extract(val: Buffer | string): string {
+    const buffer = isString(val)
+                 ? Buffer.from(val, 'utf-8')
+                 : val
+
+    return buffer
       .slice(this.startIndex, this.endIndex)
-      .toString()
+      .toString('utf-8')
   }
 }
