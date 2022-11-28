@@ -75,7 +75,7 @@ fn main(mut cx: ModuleContext) -> NeonResult<()> {
     Ok(())
 }
 
-// cedarwood.createForwardDictionary(patterns: string[]): NativeCedarForwardDictionary
+// cedarwoodCreateForwardDictionary(patterns: string[]): NativeCedarForwardDictionary
 fn cedarwood_create_forward_dictionary(mut cx: FunctionContext) -> JsResult<JsBox<JsCedarwoodForwardDictionary>> {
     let patterns = cx.argument::<JsArray>(0)?;
     let patterns = js_array_to_vec_string(&mut cx, patterns)?;
@@ -86,7 +86,7 @@ fn cedarwood_create_forward_dictionary(mut cx: FunctionContext) -> JsResult<JsBo
     }
 }
 
-// cedarwood.createBackwardDictionary(patterns: string[]): NativeCedarwoodBackwardDictionary
+// cedarwoodCreateBackwardDictionary(patterns: string[]): NativeCedarwoodBackwardDictionary
 fn cedarwood_create_backward_dictionary(mut cx: FunctionContext) -> JsResult<JsBox<JsCedarwoodBackwardDictionary>> {
     let patterns = cx.argument::<JsArray>(0)?;
     let patterns = js_array_to_vec_string(&mut cx, patterns)?;
@@ -97,7 +97,7 @@ fn cedarwood_create_backward_dictionary(mut cx: FunctionContext) -> JsResult<JsB
     }
 }
 
-// cedarwood.segmentFully(
+// cedarwoodSegmentFully(
 //   text: string
 // , dict: NativeCedarwoodForwardDictionary
 // , behaviorForUnmatched: BehaviorForUnmatched
@@ -125,7 +125,7 @@ fn cedarwood_segment_fully(mut cx: FunctionContext) -> JsResult<JsArray> {
     Ok(js_array)
 }
 
-// cedarwood.segmentForwardLongest(
+// cedarwoodSegmentForwardLongest(
 //   text: string
 // , dict: NativeCedarwoodForwardDictionary
 // , behaviorForUnmatched: BehaviorForUnmatched
@@ -153,7 +153,7 @@ fn cedarwood_segment_forward_longsest(mut cx: FunctionContext) -> JsResult<JsArr
     Ok(js_array)
 }
 
-// cedarwood.segmentBackwardLongest(
+// cedarwoodSegmentBackwardLongest(
 //   text: string
 // , dict: NativeCedarwoodBackwardDictionary
 // , behaviorForUnmatched: BehaviorForUnmatched
@@ -177,7 +177,7 @@ fn cedarwood_segment_backward_longest(mut cx: FunctionContext) -> JsResult<JsArr
     Ok(js_array)
 }
 
-// cedarwood.segmentBidirectionalLongest(
+// cedarwoodSegmentBidirectionalLongest(
 //   text: string
 // , forwardDict: NativeCedarForwardDictionary
 // , backwardDict: NativeCedarBackwardDictionary
@@ -208,7 +208,7 @@ fn cedarwood_segment_bidirectional_longest(mut cx: FunctionContext) -> JsResult<
     Ok(js_array)
 }
 
-// daachorse.createStandardDictionary(patterns: string[]): NativeDaachorseDictionary
+// daachorseCreateStandardDictionary(patterns: string[]): NativeDaachorseDictionary
 fn daachorse_create_standard_dictionary(
     mut cx: FunctionContext
 ) -> JsResult<JsBox<JsDaachorseStandardDictionary>> {
@@ -221,7 +221,7 @@ fn daachorse_create_standard_dictionary(
     }
 }
 
-// daachorse.createForwardDictionary(patterns: string[]): NativeDaachorseForwardDictionary
+// daachorseCreateForwardDictionary(patterns: string[]): NativeDaachorseForwardDictionary
 fn daachorse_create_forward_dictionary(mut cx: FunctionContext) -> JsResult<JsBox<JsDaachorseForwardDictionary>> {
     let patterns = cx.argument::<JsArray>(0)?;
     let patterns = js_array_to_vec_string(&mut cx, patterns)?;
@@ -232,7 +232,7 @@ fn daachorse_create_forward_dictionary(mut cx: FunctionContext) -> JsResult<JsBo
     }
 }
 
-// daachorse.createBackwardDictionary(patterns: string[]): NativeDaachorseBackwardDictionary
+// daachorseCreateBackwardDictionary(patterns: string[]): NativeDaachorseBackwardDictionary
 fn daachorse_create_backward_dictionary(mut cx: FunctionContext) -> JsResult<JsBox<JsDaachorseBackwardDictionary>> {
     let patterns = cx.argument::<JsArray>(0)?;
     let patterns = js_array_to_vec_string(&mut cx, patterns)?;
@@ -243,7 +243,7 @@ fn daachorse_create_backward_dictionary(mut cx: FunctionContext) -> JsResult<JsB
     }
 }
 
-// daachorse.segmentFully(
+// daachorseSegmentFully(
 //   text: string
 // , dict: NativeDaachorseStandardDictionary
 // , behaviorForUnmatched: BehaviorForUnmatched
@@ -271,7 +271,7 @@ fn daachorse_segment_fully(mut cx: FunctionContext) -> JsResult<JsArray> {
     Ok(js_array)
 }
 
-// daachorse.segmentForwardLongest(
+// daachorseSegmentForwardLongest(
 //   text: string
 // , dict: NativeDaachorseForwardDictionary
 // , behaviorForUnmatched: BehaviorForUnmatched
@@ -299,7 +299,7 @@ fn daachorse_segment_forward_longsest(mut cx: FunctionContext) -> JsResult<JsArr
     Ok(js_array)
 }
 
-// daachorse.segmentBackwardLongest(
+// daachorseSegmentBackwardLongest(
 //   text: string
 // , dict: NativeDaachorseBackwardDictionary
 // , behaviorForUnmatched: BehaviorForUnmatched
@@ -323,7 +323,7 @@ fn daachorse_segment_backward_longest(mut cx: FunctionContext) -> JsResult<JsArr
     Ok(js_array)
 }
 
-// daachorse.segmentBidirectionalLongest(
+// daachorseSegmentBidirectionalLongest(
 //   text: string
 // , forwardDict: NativeDaachorseForwardDictionary
 // , backwardDict: NativeDaachorseBackwardDictionary
@@ -354,7 +354,7 @@ fn daachorse_segment_bidirectional_longest(mut cx: FunctionContext) -> JsResult<
     Ok(js_array)
 }
 
-// hashmap.createDictionary(patterns: string[]): NativeHashmapDictionary
+// hashmapCreateDictionary(patterns: string[]): NativeHashmapDictionary
 fn hashmap_create_dictionary(mut cx: FunctionContext) -> JsResult<JsBox<JsHashmapDictionary>> {
     let patterns = cx.argument::<JsArray>(0)?;
     let patterns = js_array_to_vec_string(&mut cx, patterns)?;
@@ -365,7 +365,7 @@ fn hashmap_create_dictionary(mut cx: FunctionContext) -> JsResult<JsBox<JsHashma
     }
 }
 
-// hashmap.segmentFully(
+// hashmapSegmentFully(
 //   text: string
 // , dict: NativeHashmapDictionary
 // , behaviorForUnmatched: BehaviorForUnmatched
@@ -393,7 +393,7 @@ fn hashmap_segment_fully(mut cx: FunctionContext) -> JsResult<JsArray> {
     Ok(js_array)
 }
 
-// hashmap.segmentForwardLongest(
+// hashmapSegmentForwardLongest(
 //   text: string
 // , dict: NativeHashmapDictionary
 // , behaviorForUnmatched: BehaviorForUnmatched
@@ -421,7 +421,7 @@ fn hashmap_segment_forward_longsest(mut cx: FunctionContext) -> JsResult<JsArray
     Ok(js_array)
 }
 
-// hashmap.segmentBackwardLongest(
+// hashmapSegmentBackwardLongest(
 //   text: string
 // , dict: NativeHashmapDictionary
 // , behaviorForUnmatched: BehaviorForUnmatched
@@ -445,7 +445,7 @@ fn hashmap_segment_backward_longest(mut cx: FunctionContext) -> JsResult<JsArray
     Ok(js_array)
 }
 
-// hashmap.segmentBidirectionalLongest(
+// hashmapSegmentBidirectionalLongest(
 //   text: string
 // , dict: NativeHashmapDictionary
 // , behaviorForUnmatched: BehaviorForUnmatched
