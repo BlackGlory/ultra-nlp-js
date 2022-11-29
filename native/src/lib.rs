@@ -7,38 +7,38 @@ use ultra_nlp::{
     hashmap,
 };
 
-struct JsCedarwoodForwardDictionary {
+struct NativeCedarwoodForwardDictionary {
     dict: cedarwood::ForwardDictionary,
 }
 
-struct JsCedarwoodBackwardDictionary {
+struct NativeCedarwoodBackwardDictionary {
     dict: cedarwood::BackwardDictionary,
 }
 
-impl Finalize for JsCedarwoodForwardDictionary {}
-impl Finalize for JsCedarwoodBackwardDictionary {}
+impl Finalize for NativeCedarwoodForwardDictionary {}
+impl Finalize for NativeCedarwoodBackwardDictionary {}
 
-struct JsDaachorseStandardDictionary {
+struct NativeDaachorseStandardDictionary {
     dict: daachorse::StandardDictionary,
 }
 
-struct JsDaachorseForwardDictionary {
+struct NativeDaachorseForwardDictionary {
     dict: daachorse::ForwardDictionary,
 }
 
-struct JsDaachorseBackwardDictionary {
+struct NativeDaachorseBackwardDictionary {
     dict: daachorse::BackwardDictionary,
 }
 
-impl Finalize for JsDaachorseStandardDictionary {}
-impl Finalize for JsDaachorseForwardDictionary {}
-impl Finalize for JsDaachorseBackwardDictionary {}
+impl Finalize for NativeDaachorseStandardDictionary {}
+impl Finalize for NativeDaachorseForwardDictionary {}
+impl Finalize for NativeDaachorseBackwardDictionary {}
 
-struct JsHashmapDictionary {
+struct NativeHashmapDictionary {
     dict: hashmap::Dictionary,
 }
 
-impl Finalize for JsHashmapDictionary {}
+impl Finalize for NativeHashmapDictionary {}
 
 #[neon::main]
 fn main(mut cx: ModuleContext) -> NeonResult<()> {
@@ -75,24 +75,24 @@ fn main(mut cx: ModuleContext) -> NeonResult<()> {
     Ok(())
 }
 
-// cedarwoodCreateForwardDictionary(patterns: string[]): NativeCedarForwardDictionary
-fn cedarwood_create_forward_dictionary(mut cx: FunctionContext) -> JsResult<JsBox<JsCedarwoodForwardDictionary>> {
+// cedarwoodCreateForwardDictionary(patterns: string[]): NativeCedarwoodForwardDictionary
+fn cedarwood_create_forward_dictionary(mut cx: FunctionContext) -> JsResult<JsBox<NativeCedarwoodForwardDictionary>> {
     let patterns = cx.argument::<JsArray>(0)?;
     let patterns = js_array_to_vec_string(&mut cx, patterns)?;
 
     match cedarwood::ForwardDictionary::new(patterns) {
-        Ok(dict) =>Ok(cx.boxed(JsCedarwoodForwardDictionary { dict })),
+        Ok(dict) =>Ok(cx.boxed(NativeCedarwoodForwardDictionary { dict })),
         Err(err) => cx.throw_error(err.to_string())
     }
 }
 
 // cedarwoodCreateBackwardDictionary(patterns: string[]): NativeCedarwoodBackwardDictionary
-fn cedarwood_create_backward_dictionary(mut cx: FunctionContext) -> JsResult<JsBox<JsCedarwoodBackwardDictionary>> {
+fn cedarwood_create_backward_dictionary(mut cx: FunctionContext) -> JsResult<JsBox<NativeCedarwoodBackwardDictionary>> {
     let patterns = cx.argument::<JsArray>(0)?;
     let patterns = js_array_to_vec_string(&mut cx, patterns)?;
 
     match cedarwood::BackwardDictionary::new(patterns) {
-        Ok(dict) => Ok(cx.boxed(JsCedarwoodBackwardDictionary { dict })),
+        Ok(dict) => Ok(cx.boxed(NativeCedarwoodBackwardDictionary { dict })),
         Err(err) => cx.throw_error(err.to_string())
     }
 }
@@ -106,7 +106,7 @@ fn cedarwood_segment_fully(mut cx: FunctionContext) -> JsResult<JsArray> {
     let text = cx.argument::<JsString>(0)?;
     let text = js_string_to_string(&mut cx, text)?;
 
-    let dict = &cx.argument::<JsBox<JsCedarwoodForwardDictionary>>(1)?.dict;
+    let dict = &cx.argument::<JsBox<NativeCedarwoodForwardDictionary>>(1)?.dict;
 
     let behavior_for_unmatched = cx.argument::<JsNumber>(2)?;
     let behavior_for_unmatched = js_number_to_behavior_for_unmatched(
@@ -134,7 +134,7 @@ fn cedarwood_segment_forward_longsest(mut cx: FunctionContext) -> JsResult<JsArr
     let text = cx.argument::<JsString>(0)?;
     let text = js_string_to_string(&mut cx, text)?;
 
-    let dict = &cx.argument::<JsBox<JsCedarwoodForwardDictionary>>(1)?.dict;
+    let dict = &cx.argument::<JsBox<NativeCedarwoodForwardDictionary>>(1)?.dict;
 
     let behavior_for_unmatched = cx.argument::<JsNumber>(2)?;
     let behavior_for_unmatched = js_number_to_behavior_for_unmatched(
@@ -162,7 +162,7 @@ fn cedarwood_segment_backward_longest(mut cx: FunctionContext) -> JsResult<JsArr
     let text = cx.argument::<JsString>(0)?;
     let text = js_string_to_string(&mut cx, text)?;
 
-    let dict = &cx.argument::<JsBox<JsCedarwoodBackwardDictionary>>(1)?.dict;
+    let dict = &cx.argument::<JsBox<NativeCedarwoodBackwardDictionary>>(1)?.dict;
 
     let behavior_for_unmatched = cx.argument::<JsNumber>(2)?;
     let behavior_for_unmatched = js_number_to_behavior_for_unmatched(
@@ -187,8 +187,8 @@ fn cedarwood_segment_bidirectional_longest(mut cx: FunctionContext) -> JsResult<
     let text = cx.argument::<JsString>(0)?;
     let text = js_string_to_string(&mut cx, text)?;
 
-    let forward_dict = &cx.argument::<JsBox<JsCedarwoodForwardDictionary>>(1)?.dict;
-    let backward_dict = &cx.argument::<JsBox<JsCedarwoodBackwardDictionary>>(2)?.dict;
+    let forward_dict = &cx.argument::<JsBox<NativeCedarwoodForwardDictionary>>(1)?.dict;
+    let backward_dict = &cx.argument::<JsBox<NativeCedarwoodBackwardDictionary>>(2)?.dict;
 
     let behavior_for_unmatched = cx.argument::<JsNumber>(3)?;
     let behavior_for_unmatched = js_number_to_behavior_for_unmatched(
@@ -211,34 +211,34 @@ fn cedarwood_segment_bidirectional_longest(mut cx: FunctionContext) -> JsResult<
 // daachorseCreateStandardDictionary(patterns: string[]): NativeDaachorseDictionary
 fn daachorse_create_standard_dictionary(
     mut cx: FunctionContext
-) -> JsResult<JsBox<JsDaachorseStandardDictionary>> {
+) -> JsResult<JsBox<NativeDaachorseStandardDictionary>> {
     let patterns = cx.argument::<JsArray>(0)?;
     let patterns = js_array_to_vec_string(&mut cx, patterns)?;
 
     match daachorse::StandardDictionary::new(patterns) {
-        Ok(dict) => Ok(cx.boxed(JsDaachorseStandardDictionary { dict })),
+        Ok(dict) => Ok(cx.boxed(NativeDaachorseStandardDictionary { dict })),
         Err(err) => cx.throw_error(err.to_string()),
     }
 }
 
 // daachorseCreateForwardDictionary(patterns: string[]): NativeDaachorseForwardDictionary
-fn daachorse_create_forward_dictionary(mut cx: FunctionContext) -> JsResult<JsBox<JsDaachorseForwardDictionary>> {
+fn daachorse_create_forward_dictionary(mut cx: FunctionContext) -> JsResult<JsBox<NativeDaachorseForwardDictionary>> {
     let patterns = cx.argument::<JsArray>(0)?;
     let patterns = js_array_to_vec_string(&mut cx, patterns)?;
 
     match daachorse::ForwardDictionary::new(patterns) {
-        Ok(dict) =>Ok(cx.boxed(JsDaachorseForwardDictionary { dict })),
+        Ok(dict) =>Ok(cx.boxed(NativeDaachorseForwardDictionary { dict })),
         Err(err) => cx.throw_error(err.to_string())
     }
 }
 
 // daachorseCreateBackwardDictionary(patterns: string[]): NativeDaachorseBackwardDictionary
-fn daachorse_create_backward_dictionary(mut cx: FunctionContext) -> JsResult<JsBox<JsDaachorseBackwardDictionary>> {
+fn daachorse_create_backward_dictionary(mut cx: FunctionContext) -> JsResult<JsBox<NativeDaachorseBackwardDictionary>> {
     let patterns = cx.argument::<JsArray>(0)?;
     let patterns = js_array_to_vec_string(&mut cx, patterns)?;
 
     match daachorse::BackwardDictionary::new(patterns) {
-        Ok(dict) => Ok(cx.boxed(JsDaachorseBackwardDictionary { dict })),
+        Ok(dict) => Ok(cx.boxed(NativeDaachorseBackwardDictionary { dict })),
         Err(err) => cx.throw_error(err.to_string())
     }
 }
@@ -252,7 +252,7 @@ fn daachorse_segment_fully(mut cx: FunctionContext) -> JsResult<JsArray> {
     let text = cx.argument::<JsString>(0)?;
     let text = js_string_to_string(&mut cx, text)?;
 
-    let dict = &cx.argument::<JsBox<JsDaachorseStandardDictionary>>(1)?.dict;
+    let dict = &cx.argument::<JsBox<NativeDaachorseStandardDictionary>>(1)?.dict;
 
     let behavior_for_unmatched = cx.argument::<JsNumber>(2)?;
     let behavior_for_unmatched = js_number_to_behavior_for_unmatched(
@@ -280,7 +280,7 @@ fn daachorse_segment_forward_longsest(mut cx: FunctionContext) -> JsResult<JsArr
     let text = cx.argument::<JsString>(0)?;
     let text = js_string_to_string(&mut cx, text)?;
 
-    let dict = &cx.argument::<JsBox<JsDaachorseForwardDictionary>>(1)?.dict;
+    let dict = &cx.argument::<JsBox<NativeDaachorseForwardDictionary>>(1)?.dict;
 
     let behavior_for_unmatched = cx.argument::<JsNumber>(2)?;
     let behavior_for_unmatched = js_number_to_behavior_for_unmatched(
@@ -308,7 +308,7 @@ fn daachorse_segment_backward_longest(mut cx: FunctionContext) -> JsResult<JsArr
     let text = cx.argument::<JsString>(0)?;
     let text = js_string_to_string(&mut cx, text)?;
 
-    let dict = &cx.argument::<JsBox<JsDaachorseBackwardDictionary>>(1)?.dict;
+    let dict = &cx.argument::<JsBox<NativeDaachorseBackwardDictionary>>(1)?.dict;
 
     let behavior_for_unmatched = cx.argument::<JsNumber>(2)?;
     let behavior_for_unmatched = js_number_to_behavior_for_unmatched(
@@ -333,8 +333,8 @@ fn daachorse_segment_bidirectional_longest(mut cx: FunctionContext) -> JsResult<
     let text = cx.argument::<JsString>(0)?;
     let text = js_string_to_string(&mut cx, text)?;
 
-    let forward_dict = &cx.argument::<JsBox<JsDaachorseForwardDictionary>>(1)?.dict;
-    let backward_dict = &cx.argument::<JsBox<JsDaachorseBackwardDictionary>>(2)?.dict;
+    let forward_dict = &cx.argument::<JsBox<NativeDaachorseForwardDictionary>>(1)?.dict;
+    let backward_dict = &cx.argument::<JsBox<NativeDaachorseBackwardDictionary>>(2)?.dict;
 
     let behavior_for_unmatched = cx.argument::<JsNumber>(3)?;
     let behavior_for_unmatched = js_number_to_behavior_for_unmatched(
@@ -355,12 +355,12 @@ fn daachorse_segment_bidirectional_longest(mut cx: FunctionContext) -> JsResult<
 }
 
 // hashmapCreateDictionary(patterns: string[]): NativeHashmapDictionary
-fn hashmap_create_dictionary(mut cx: FunctionContext) -> JsResult<JsBox<JsHashmapDictionary>> {
+fn hashmap_create_dictionary(mut cx: FunctionContext) -> JsResult<JsBox<NativeHashmapDictionary>> {
     let patterns = cx.argument::<JsArray>(0)?;
     let patterns = js_array_to_vec_string(&mut cx, patterns)?;
 
     match hashmap::Dictionary::new(patterns) {
-        Ok(dict) =>Ok(cx.boxed(JsHashmapDictionary { dict })),
+        Ok(dict) =>Ok(cx.boxed(NativeHashmapDictionary { dict })),
         Err(err) => cx.throw_error(err.to_string())
     }
 }
@@ -374,7 +374,7 @@ fn hashmap_segment_fully(mut cx: FunctionContext) -> JsResult<JsArray> {
     let text = cx.argument::<JsString>(0)?;
     let text = js_string_to_string(&mut cx, text)?;
 
-    let dict = &cx.argument::<JsBox<JsHashmapDictionary>>(1)?.dict;
+    let dict = &cx.argument::<JsBox<NativeHashmapDictionary>>(1)?.dict;
 
     let behavior_for_unmatched = cx.argument::<JsNumber>(2)?;
     let behavior_for_unmatched = js_number_to_behavior_for_unmatched(
@@ -402,7 +402,7 @@ fn hashmap_segment_forward_longsest(mut cx: FunctionContext) -> JsResult<JsArray
     let text = cx.argument::<JsString>(0)?;
     let text = js_string_to_string(&mut cx, text)?;
 
-    let dict = &cx.argument::<JsBox<JsHashmapDictionary>>(1)?.dict;
+    let dict = &cx.argument::<JsBox<NativeHashmapDictionary>>(1)?.dict;
 
     let behavior_for_unmatched = cx.argument::<JsNumber>(2)?;
     let behavior_for_unmatched = js_number_to_behavior_for_unmatched(
@@ -430,7 +430,7 @@ fn hashmap_segment_backward_longest(mut cx: FunctionContext) -> JsResult<JsArray
     let text = cx.argument::<JsString>(0)?;
     let text = js_string_to_string(&mut cx, text)?;
 
-    let dict = &cx.argument::<JsBox<JsHashmapDictionary>>(1)?.dict;
+    let dict = &cx.argument::<JsBox<NativeHashmapDictionary>>(1)?.dict;
 
     let behavior_for_unmatched = cx.argument::<JsNumber>(2)?;
     let behavior_for_unmatched = js_number_to_behavior_for_unmatched(
@@ -454,7 +454,7 @@ fn hashmap_segment_bidirectional_longest(mut cx: FunctionContext) -> JsResult<Js
     let text = cx.argument::<JsString>(0)?;
     let text = js_string_to_string(&mut cx, text)?;
 
-    let dict = &cx.argument::<JsBox<JsHashmapDictionary>>(1)?.dict;
+    let dict = &cx.argument::<JsBox<NativeHashmapDictionary>>(1)?.dict;
 
     let behavior_for_unmatched = cx.argument::<JsNumber>(2)?;
     let behavior_for_unmatched = js_number_to_behavior_for_unmatched(
