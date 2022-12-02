@@ -3,7 +3,7 @@ import { Benchmark } from 'extra-benchmark'
 import { TextRange } from '..'
 
 const benchmark = new Benchmark('substring by bytes', {
-  warmUps: 10000
+  warms: 10000
 , runs: 10000
 })
 
