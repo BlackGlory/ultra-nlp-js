@@ -47,6 +47,7 @@
     "@blackglory/go": "^1.1.2",
     "@commitlint/cli": "^17.3.0",
     "@commitlint/config-conventional": "^17.3.0",
+    "@node-rs/jieba": "^1.6.1",
     "@types/jest": "^29.2.3",
     "@types/node": "16",
     "@typescript-eslint/eslint-plugin": "^5.45.0",
