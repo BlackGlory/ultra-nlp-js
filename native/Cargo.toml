@@ -19,4 +19,4 @@ ultra-nlp = "0.6.2"
 [dependencies.neon]
 version = "0.10.1"
 default-features = false
-features = ["napi-4"]
+features = ["napi-6"]
