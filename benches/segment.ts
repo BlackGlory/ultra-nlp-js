@@ -56,6 +56,7 @@ go(async () => {
     return () => {
       for (const line of samples) {
         cedarwood.segmentFull(line, dict, BehaviorForUnmatched.KeepAsWords)
+          .forEach(match => match.getValueFrom(patterns))
       }
     }
   })
@@ -66,6 +67,7 @@ go(async () => {
     return () => {
       for (const line of samples) {
         daachorse.segmentFull(line, dict, BehaviorForUnmatched.KeepAsWords)
+          .forEach(match => match.getValueFrom(patterns))
       }
     }
   })
