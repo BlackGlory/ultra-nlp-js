@@ -22,7 +22,7 @@ enum BehaviorForUnmatched {
 
 ### Match
 ```ts
-class Match implements Jsonable<{
+class Match implements JSONSerializable<{
   range: TextRange
   indexOfPatterns: number | null
 }> {
@@ -39,7 +39,7 @@ class Match implements Jsonable<{
 
 ### TextRange
 ```ts
-class TextRange implements Jsonable<{
+class TextRange implements JSONSerializable<{
   startIndex: number
   endIndex: number
 }> {

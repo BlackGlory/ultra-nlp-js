@@ -1,8 +1,8 @@
 import { TextRange } from './text-range'
 import { isntNull } from '@blackglory/prelude'
-import { Jsonable } from 'justypes'
+import { JSONSerializable } from 'justypes'
 
-export class Match implements Jsonable<{
+export class Match implements JSONSerializable<{
   range: TextRange
   indexOfPatterns: number | null
 }> {

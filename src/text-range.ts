@@ -1,7 +1,7 @@
-import { Jsonable } from 'justypes'
+import { JSONSerializable } from 'justypes'
 import { isString } from '@blackglory/prelude'
 
-export class TextRange implements Jsonable<{
+export class TextRange implements JSONSerializable<{
   startIndex: number
   endIndex: number
 }> {
