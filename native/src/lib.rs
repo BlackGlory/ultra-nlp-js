@@ -42,13 +42,20 @@ impl Finalize for NativeHashmapDictionary {}
 
 #[neon::main]
 fn main(mut cx: ModuleContext) -> NeonResult<()> {
-    let behavior_for_unmatched = cx.empty_object();
-    let ignore = cx.number(BehaviorForUnmatched::Ignore as u8);
-    behavior_for_unmatched.set(&mut cx, "Ignore", ignore)?;
-    let keep_as_words = cx.number(BehaviorForUnmatched::KeepAsWords as u8);
-    behavior_for_unmatched.set(&mut cx, "KeepAsWords", keep_as_words)?;
-    let keep_as_chars = cx.number(BehaviorForUnmatched::KeepAsChars as u8);
-    behavior_for_unmatched.set(&mut cx, "KeepAsChars", keep_as_chars)?;
+    let behavior_for_unmatched = {
+        let obj = cx.empty_object();
+
+        let ignore = cx.number(BehaviorForUnmatched::Ignore as u8);
+        obj.set(&mut cx, "Ignore", ignore)?;
+
+        let keep_as_words = cx.number(BehaviorForUnmatched::KeepAsWords as u8);
+        obj.set(&mut cx, "KeepAsWords", keep_as_words)?;
+
+        let keep_as_chars = cx.number(BehaviorForUnmatched::KeepAsChars as u8);
+        obj.set(&mut cx, "KeepAsChars", keep_as_chars)?;
+
+        obj
+    };
     cx.export_value("BehaviorForUnmatched", behavior_for_unmatched)?;
 
     cx.export_function("cedarwoodCreateForwardDictionary", cedarwood_create_forward_dictionary)?;
@@ -76,7 +83,9 @@ fn main(mut cx: ModuleContext) -> NeonResult<()> {
 }
 
 // cedarwoodCreateForwardDictionary(patterns: string[]): NativeCedarwoodForwardDictionary
-fn cedarwood_create_forward_dictionary(mut cx: FunctionContext) -> JsResult<JsBox<NativeCedarwoodForwardDictionary>> {
+fn cedarwood_create_forward_dictionary(
+    mut cx: FunctionContext
+) -> JsResult<JsBox<NativeCedarwoodForwardDictionary>> {
     let patterns = cx.argument::<JsArray>(0)?;
     let patterns = js_array_to_vec_string(&mut cx, patterns)?;
 
@@ -87,7 +96,9 @@ fn cedarwood_create_forward_dictionary(mut cx: FunctionContext) -> JsResult<JsBo
 }
 
 // cedarwoodCreateBackwardDictionary(patterns: string[]): NativeCedarwoodBackwardDictionary
-fn cedarwood_create_backward_dictionary(mut cx: FunctionContext) -> JsResult<JsBox<NativeCedarwoodBackwardDictionary>> {
+fn cedarwood_create_backward_dictionary(
+    mut cx: FunctionContext
+) -> JsResult<JsBox<NativeCedarwoodBackwardDictionary>> {
     let patterns = cx.argument::<JsArray>(0)?;
     let patterns = js_array_to_vec_string(&mut cx, patterns)?;
 
@@ -114,11 +125,7 @@ fn cedarwood_segment_fully(mut cx: FunctionContext) -> JsResult<JsArray> {
         behavior_for_unmatched
     )?;
 
-    let matches = cedarwood::segment_fully(
-        text,
-        dict,
-        behavior_for_unmatched
-    );
+    let matches = cedarwood::segment_fully(text, dict, behavior_for_unmatched);
 
     let js_array = matches_to_js_array(&mut cx, matches)?;
 
@@ -142,11 +149,7 @@ fn cedarwood_segment_forward_longsest(mut cx: FunctionContext) -> JsResult<JsArr
         behavior_for_unmatched
     )?;
 
-    let matches = cedarwood::segment_forward_longest(
-        text,
-        dict,
-        behavior_for_unmatched
-    );
+    let matches = cedarwood::segment_forward_longest(text, dict, behavior_for_unmatched);
 
     let js_array = matches_to_js_array(&mut cx, matches)?;
 
@@ -222,7 +225,9 @@ fn daachorse_create_standard_dictionary(
 }
 
 // daachorseCreateForwardDictionary(patterns: string[]): NativeDaachorseForwardDictionary
-fn daachorse_create_forward_dictionary(mut cx: FunctionContext) -> JsResult<JsBox<NativeDaachorseForwardDictionary>> {
+fn daachorse_create_forward_dictionary(
+    mut cx: FunctionContext
+) -> JsResult<JsBox<NativeDaachorseForwardDictionary>> {
     let patterns = cx.argument::<JsArray>(0)?;
     let patterns = js_array_to_vec_string(&mut cx, patterns)?;
 
@@ -233,7 +238,9 @@ fn daachorse_create_forward_dictionary(mut cx: FunctionContext) -> JsResult<JsBo
 }
 
 // daachorseCreateBackwardDictionary(patterns: string[]): NativeDaachorseBackwardDictionary
-fn daachorse_create_backward_dictionary(mut cx: FunctionContext) -> JsResult<JsBox<NativeDaachorseBackwardDictionary>> {
+fn daachorse_create_backward_dictionary(
+    mut cx: FunctionContext
+) -> JsResult<JsBox<NativeDaachorseBackwardDictionary>> {
     let patterns = cx.argument::<JsArray>(0)?;
     let patterns = js_array_to_vec_string(&mut cx, patterns)?;
 
@@ -260,11 +267,7 @@ fn daachorse_segment_fully(mut cx: FunctionContext) -> JsResult<JsArray> {
         behavior_for_unmatched
     )?;
 
-    let matches = daachorse::segment_fully(
-        text,
-        dict,
-        behavior_for_unmatched
-    );
+    let matches = daachorse::segment_fully(text, dict, behavior_for_unmatched);
 
     let js_array = matches_to_js_array(&mut cx, matches)?;
 
@@ -288,11 +291,7 @@ fn daachorse_segment_forward_longsest(mut cx: FunctionContext) -> JsResult<JsArr
         behavior_for_unmatched
     )?;
 
-    let matches = daachorse::segment_forward_longest(
-        text,
-        dict,
-        behavior_for_unmatched
-    );
+    let matches = daachorse::segment_forward_longest(text, dict, behavior_for_unmatched);
 
     let js_array = matches_to_js_array(&mut cx, matches)?;
 
@@ -382,11 +381,7 @@ fn hashmap_segment_fully(mut cx: FunctionContext) -> JsResult<JsArray> {
         behavior_for_unmatched
     )?;
 
-    let matches = hashmap::segment_fully(
-        text,
-        dict,
-        behavior_for_unmatched
-    );
+    let matches = hashmap::segment_fully(text, dict, behavior_for_unmatched);
 
     let js_array = matches_to_js_array(&mut cx, matches)?;
 
@@ -410,11 +405,7 @@ fn hashmap_segment_forward_longsest(mut cx: FunctionContext) -> JsResult<JsArray
         behavior_for_unmatched
     )?;
 
-    let matches = hashmap::segment_forward_longest(
-        text,
-        dict,
-        behavior_for_unmatched
-    );
+    let matches = hashmap::segment_forward_longest(text, dict, behavior_for_unmatched);
 
     let js_array = matches_to_js_array(&mut cx, matches)?;
 
@@ -462,11 +453,7 @@ fn hashmap_segment_bidirectional_longest(mut cx: FunctionContext) -> JsResult<Js
         behavior_for_unmatched
     )?;
 
-    let matches = hashmap::segment_bidirectional_longest(
-        text,
-        dict,
-        behavior_for_unmatched
-    );
+    let matches = hashmap::segment_bidirectional_longest(text, dict, behavior_for_unmatched);
 
     let js_array = matches_to_js_array(&mut cx, matches)?;
 
@@ -478,7 +465,8 @@ fn matches_to_js_array<'a>(
     matches: Vec<Match>
 ) -> NeonResult<Handle<'a, JsArray>> {
     let js_array = JsArray::new(cx, matches.len() as u32);
-    for (i, obj) in matches.iter().enumerate() {
+
+    for (i, obj) in matches.into_iter().enumerate() {
         let mat = cx.empty_object();
 
         let range = cx.empty_object();
@@ -505,10 +493,7 @@ fn matches_to_js_array<'a>(
     Ok(js_array)
 }
 
-fn js_array_to_vec_string(
-    cx: &mut FunctionContext,
-    arr: Handle<JsArray>,
-) -> NeonResult<Vec<String>> {
+fn js_array_to_vec_string(cx: &mut FunctionContext, arr: Handle<JsArray>) -> NeonResult<Vec<String>> {
     let result = arr
         .to_vec(cx)?
         .into_iter()
@@ -522,10 +507,7 @@ fn js_array_to_vec_string(
     Ok(result)
 }
 
-fn js_string_to_string(
-    cx: &mut FunctionContext,
-    val: Handle<JsString>
-) -> NeonResult<String> {
+fn js_string_to_string(cx: &mut FunctionContext, val: Handle<JsString>) -> NeonResult<String> {
     let result = val
         .downcast::<JsString, _>(cx)
         .or_throw(cx)?
