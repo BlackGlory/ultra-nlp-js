@@ -8,6 +8,7 @@
   ],
   "files": [
     "lib",
+    "src",
     "native/src",
     "native/Cargo.lock",
     "native/Cargo.toml"
