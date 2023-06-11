@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.9](https://github.com/BlackGlory/ultra-nlp-js/compare/v0.4.8...v0.4.9) (2023-06-11)
+
+
+### Bug Fixes
+
+* export src ([0647142](https://github.com/BlackGlory/ultra-nlp-js/commit/064714274970ee7864806ad12e75446fbf0e95a8))
+
 ### [0.4.8](https://github.com/BlackGlory/ultra-nlp-js/compare/v0.4.7...v0.4.8) (2023-01-19)
 
 ### [0.4.7](https://github.com/BlackGlory/ultra-nlp-js/compare/v0.4.6...v0.4.7) (2023-01-19)
