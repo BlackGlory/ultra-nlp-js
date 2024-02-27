@@ -14,9 +14,8 @@ crate-type = ["cdylib"]
 neon-build = "0.10.1"
 
 [dependencies]
-ultra-nlp = "0.7.3"
+ultra-nlp = "0.8.0"
 
 [dependencies.neon]
-version = "0.10.1"
-default-features = false
+version = "1.0.0"
 features = ["napi-6"]

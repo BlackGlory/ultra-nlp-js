@@ -464,7 +464,7 @@ fn matches_to_js_array<'a>(
     cx: &mut FunctionContext<'a>,
     matches: Vec<Match>
 ) -> NeonResult<Handle<'a, JsArray>> {
-    let js_array = JsArray::new(cx, matches.len() as u32);
+    let js_array = JsArray::new(cx, matches.len());
 
     for (i, obj) in matches.into_iter().enumerate() {
         let mat = cx.empty_object();
@@ -478,7 +478,7 @@ fn matches_to_js_array<'a>(
         mat.set(cx, "range", range)?;
         match obj.index_of_patterns() {
             Some(x) => {
-                let value = cx.number(x);
+                let value = cx.number(x as f64);
                 mat.set(cx, "indexOfPatterns", value)?;
             },
             None => {
