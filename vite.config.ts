@@ -6,16 +6,4 @@ export default defineConfig({
   plugins: [
     tsconfigPaths()
   ]
-// , optimizeDeps: {
-//     exclude: [
-//       './native/index.node'
-//     ]
-//   }
-// , build: {
-//     rollupOptions: {
-//       external: [
-//         './native/index.node'
-//       ]
-//     }
-//   }
 })
