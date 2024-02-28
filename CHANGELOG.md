@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.5.0](https://github.com/BlackGlory/ultra-nlp-js/compare/v0.4.10...v0.5.0) (2024-02-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* - CommonJS => ESM
+- Node.js v14 => Node.js v18.17
+
+* upgrade dependencies ([17d12d6](https://github.com/BlackGlory/ultra-nlp-js/commit/17d12d6d9c0e7a5cd0c304029524c00753bdd7d5))
+
 ### [0.4.10](https://github.com/BlackGlory/ultra-nlp-js/compare/v0.4.9...v0.4.10) (2024-02-27)
 
 ### [0.4.9](https://github.com/BlackGlory/ultra-nlp-js/compare/v0.4.8...v0.4.9) (2023-06-11)
