@@ -1,8 +1,9 @@
-import { segmentFull } from '@cedarwood/segment-fully'
-import { ForwardDictionary } from '@cedarwood/forward-dictionary'
-import { BehaviorForUnmatched } from '@src/types'
-import { Match } from '@src/match'
-import { TextRange } from '@src/text-range'
+import { describe, test, expect } from 'vitest'
+import { segmentFull } from '@cedarwood/segment-fully.js'
+import { ForwardDictionary } from '@cedarwood/forward-dictionary.js'
+import { BehaviorForUnmatched } from '@src/types.js'
+import { Match } from '@src/match.js'
+import { TextRange } from '@src/text-range.js'
 
 describe('segmentFull', () => {
   test('dictionary', () => {

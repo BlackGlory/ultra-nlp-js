@@ -1,8 +1,8 @@
-import { BehaviorForUnmatched } from '@src/types'
-import { Match } from '@src/match'
-import { convertIMatchToMatch } from '@src/utils'
-import { StandardDictionary } from './standard-dictionary'
-import { addon } from '@src/addon'
+import { BehaviorForUnmatched } from '@src/types.js'
+import { Match } from '@src/match.js'
+import { convertIMatchToMatch } from '@src/utils.js'
+import { StandardDictionary } from './standard-dictionary.js'
+import { addon } from '@src/addon.js'
 
 export function segmentFull(
   text: string

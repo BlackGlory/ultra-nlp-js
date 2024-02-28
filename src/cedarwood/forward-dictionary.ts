@@ -1,4 +1,4 @@
-import { addon, NativeCedarwoodForwardDictionary } from '@src/addon'
+import { addon, NativeCedarwoodForwardDictionary } from '@src/addon.js'
 
 export class ForwardDictionary {
   instance: NativeCedarwoodForwardDictionary

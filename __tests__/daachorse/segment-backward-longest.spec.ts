@@ -1,8 +1,9 @@
-import { segmentBackwardLongest } from '@daachorse/segment-backward-longest'
-import { BackwardDictionary } from '@daachorse/backward-dictionary'
-import { BehaviorForUnmatched } from '@src/types'
-import { Match } from '@src/match'
-import { TextRange } from '@src/text-range'
+import { describe, test, expect } from 'vitest'
+import { segmentBackwardLongest } from '@daachorse/segment-backward-longest.js'
+import { BackwardDictionary } from '@daachorse/backward-dictionary.js'
+import { BehaviorForUnmatched } from '@src/types.js'
+import { Match } from '@src/match.js'
+import { TextRange } from '@src/text-range.js'
 
 describe('segmentBackwardLongest', () => {
   test('dictionary', () => {

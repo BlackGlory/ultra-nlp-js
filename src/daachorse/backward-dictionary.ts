@@ -1,4 +1,4 @@
-import { addon, NativeDaachorseBackwardDictionary } from '@src/addon'
+import { addon, NativeDaachorseBackwardDictionary } from '@src/addon.js'
 
 export class BackwardDictionary {
   instance: NativeDaachorseBackwardDictionary

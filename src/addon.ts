@@ -1,3 +1,5 @@
+import { createRequire } from 'module'
+
 export type NativeCedarwoodForwardDictionary = unknown
 export type NativeCedarwoodBackwardDictionary = unknown
 
@@ -108,4 +110,5 @@ interface IAddon {
   ): IMatch[]
 }
 
+const require = createRequire(import.meta.url)
 export const addon: IAddon = require('../native')

@@ -1,8 +1,8 @@
-import { BehaviorForUnmatched } from '@src/types'
-import { addon } from '@src/addon'
-import { Match } from '@src/match'
-import { convertIMatchToMatch } from '@src/utils'
-import { BackwardDictionary } from './backward-dictionary'
+import { BehaviorForUnmatched } from '@src/types.js'
+import { addon } from '@src/addon.js'
+import { Match } from '@src/match.js'
+import { convertIMatchToMatch } from '@src/utils.js'
+import { BackwardDictionary } from './backward-dictionary.js'
 
 export function segmentBackwardLongest(
   text: string

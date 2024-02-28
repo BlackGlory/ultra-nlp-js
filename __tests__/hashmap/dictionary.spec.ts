@@ -1,4 +1,5 @@
-import { Dictionary } from '@hashmap/dictionary'
+import { describe, test, expect } from 'vitest'
+import { Dictionary } from '@hashmap/dictionary.js'
 import { getError } from 'return-style'
 
 describe('Dictionary', () => {

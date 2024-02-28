@@ -1,6 +1,6 @@
 import { go, assert } from '@blackglory/prelude'
 import { Benchmark } from 'extra-benchmark'
-import { TextRange } from '..'
+import { TextRange } from '../src/index.js'
 
 const benchmark = new Benchmark('substring by bytes', {
   warms: 10000

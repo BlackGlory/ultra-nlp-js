@@ -1,5 +1,6 @@
-import { Match } from '@src/match'
-import { TextRange } from '@src/text-range'
+import { describe, test, expect } from 'vitest'
+import { Match } from '@src/match.js'
+import { TextRange } from '@src/text-range.js'
 
 describe('Match', () => {
   describe('getValueFrom', () => {

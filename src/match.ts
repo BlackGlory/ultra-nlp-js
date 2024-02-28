@@ -1,4 +1,4 @@
-import { TextRange } from './text-range'
+import { TextRange } from './text-range.js'
 import { isntNull } from '@blackglory/prelude'
 import { JSONSerializable } from 'justypes'
 

@@ -2,10 +2,14 @@ import { go } from '@blackglory/prelude'
 import { Benchmark } from 'extra-benchmark'
 import { readFileLineByLine } from 'extra-filesystem'
 import { toArrayAsync } from 'iterable-operator'
-import { cedarwood, daachorse, BehaviorForUnmatched } from '..'
+import { cedarwood, daachorse, BehaviorForUnmatched } from '../src/index.js'
 import path from 'path'
 import fs from 'fs/promises'
 import * as Jieba from '@node-rs/jieba'
+import url from 'url'
+
+const __filename = url.fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 const patternsFilename = path.join(__dirname, './patterns.txt')
 const samplesFilename = path.join(__dirname, './samples.txt')

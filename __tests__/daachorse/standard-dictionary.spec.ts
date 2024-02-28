@@ -1,4 +1,5 @@
-import { StandardDictionary } from '@daachorse/standard-dictionary'
+import { describe, test, expect } from 'vitest'
+import { StandardDictionary } from '@daachorse/standard-dictionary.js'
 import { getError } from 'return-style'
 
 describe('StandardDictionary', () => {

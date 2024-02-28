@@ -1,4 +1,5 @@
-import { TextRange } from '@src/text-range'
+import { describe, test, expect } from 'vitest'
+import { TextRange } from '@src/text-range.js'
 
 describe('TextRange', () => {
   test('len', () => {

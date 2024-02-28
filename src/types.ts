@@ -1,4 +1,4 @@
-import { addon } from './addon'
+import { addon } from './addon.js'
 
 export enum BehaviorForUnmatched {
   Ignore = addon.BehaviorForUnmatched.Ignore

@@ -1,4 +1,4 @@
-import { addon, NativeDaachorseStandardDictionary } from '@src/addon'
+import { addon, NativeDaachorseStandardDictionary } from '@src/addon.js'
 
 export class StandardDictionary {
   instance: NativeDaachorseStandardDictionary

@@ -1,4 +1,5 @@
-import { BackwardDictionary } from '@cedarwood/backward-dictionary'
+import { describe, test, expect } from 'vitest'
+import { BackwardDictionary } from '@cedarwood/backward-dictionary.js'
 import { getError } from 'return-style'
 
 describe('BackwardDictionary', () => {

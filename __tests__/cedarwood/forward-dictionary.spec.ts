@@ -1,4 +1,5 @@
-import { ForwardDictionary } from '@cedarwood/forward-dictionary'
+import { describe, test, expect } from 'vitest'
+import { ForwardDictionary } from '@cedarwood/forward-dictionary.js'
 import { getError } from 'return-style'
 
 describe('ForwardDictionary', () => {

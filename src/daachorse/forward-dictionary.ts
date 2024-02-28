@@ -1,4 +1,4 @@
-import { addon, NativeDaachorseForwardDictionary } from '@src/addon'
+import { addon, NativeDaachorseForwardDictionary } from '@src/addon.js'
 
 export class ForwardDictionary {
   instance: NativeDaachorseForwardDictionary

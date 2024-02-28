@@ -1,8 +1,8 @@
-import { BehaviorForUnmatched } from '@src/types'
-import { addon } from '@src/addon'
-import { Match } from '@src/match'
-import { convertIMatchToMatch } from '@src/utils'
-import { Dictionary } from './dictionary'
+import { BehaviorForUnmatched } from '@src/types.js'
+import { addon } from '@src/addon.js'
+import { Match } from '@src/match.js'
+import { convertIMatchToMatch } from '@src/utils.js'
+import { Dictionary } from './dictionary.js'
 
 export function segmentBidirectionalLongest(
   text: string

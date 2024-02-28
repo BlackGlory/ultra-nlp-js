@@ -1,6 +1,6 @@
-import { IMatch } from './addon'
-import { TextRange } from './text-range'
-import { Match } from './match'
+import { IMatch } from './addon.js'
+import { TextRange } from './text-range.js'
+import { Match } from './match.js'
 
 export function convertIMatchToMatch(match: IMatch): Match {
   return new Match(

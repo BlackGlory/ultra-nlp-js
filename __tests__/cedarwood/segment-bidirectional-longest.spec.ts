@@ -1,9 +1,10 @@
-import { segmentBidirectionalLongest } from '@cedarwood/segment-bidirectional-longest'
-import { ForwardDictionary } from '@cedarwood/forward-dictionary'
-import { BackwardDictionary } from '@cedarwood/backward-dictionary'
-import { BehaviorForUnmatched } from '@src/types'
-import { Match } from '@src/match'
-import { TextRange } from '@src/text-range'
+import { describe, test, expect } from 'vitest'
+import { segmentBidirectionalLongest } from '@cedarwood/segment-bidirectional-longest.js'
+import { ForwardDictionary } from '@cedarwood/forward-dictionary.js'
+import { BackwardDictionary } from '@cedarwood/backward-dictionary.js'
+import { BehaviorForUnmatched } from '@src/types.js'
+import { Match } from '@src/match.js'
+import { TextRange } from '@src/text-range.js'
 
 describe('segmentBidirectionalLongest', () => {
   test('dictionary', () => {

@@ -1,4 +1,4 @@
-import { addon, NativeHashmapDictionary } from '@src/addon'
+import { addon, NativeHashmapDictionary } from '@src/addon.js'
 
 export class Dictionary {
   instance: NativeHashmapDictionary
