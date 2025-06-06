@@ -90,7 +90,7 @@ fn cedarwood_create_forward_dictionary(
     let patterns = js_array_to_vec_string(&mut cx, patterns)?;
 
     match cedarwood::ForwardDictionary::new(patterns) {
-        Ok(dict) =>Ok(cx.boxed(NativeCedarwoodForwardDictionary { dict })),
+        Ok(dict) => Ok(cx.boxed(NativeCedarwoodForwardDictionary { dict })),
         Err(err) => cx.throw_error(err.to_string())
     }
 }
