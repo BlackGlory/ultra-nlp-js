@@ -1,5 +1,5 @@
 # ultra-nlp-js
-A [ultra-nlp] binding for Node.js.
+An [ultra-nlp] binding for Node.js.
 
 [ultra-nlp]: https://crates.io/crates/ultra-nlp
 

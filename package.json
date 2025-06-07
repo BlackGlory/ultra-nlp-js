@@ -1,7 +1,7 @@
 {
   "name": "ultra-nlp-js",
   "version": "0.5.1",
-  "description": "A Node.js binding for ultra-nlp",
+  "description": "An ultra-nlp binding for Node.js.",
   "keywords": [
     "rust",
     "native"
