@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.6.0](https://github.com/BlackGlory/ultra-nlp-js/compare/v0.5.1...v0.6.0) (2025-07-06)
+
+
+### ⚠ BREAKING CHANGES
+
+* **native:** Rust 2021 => 2024
+* Node.js v18 => v22
+
+* **native:** upgrade dependencies ([391d540](https://github.com/BlackGlory/ultra-nlp-js/commit/391d540bf961ece6c45f89aa3d7ab954ef767335))
+* upgrade dependencies ([ff80f27](https://github.com/BlackGlory/ultra-nlp-js/commit/ff80f275a7c94ca1de628ba73a38aef90782f4c2))
+
 ### [0.5.1](https://github.com/BlackGlory/ultra-nlp-js/compare/v0.5.0...v0.5.1) (2024-03-06)
 
 ## [0.5.0](https://github.com/BlackGlory/ultra-nlp-js/compare/v0.4.10...v0.5.0) (2024-02-28)
