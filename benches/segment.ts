@@ -5,7 +5,7 @@ import { toArrayAsync } from 'iterable-operator'
 import { cedarwood, daachorse, BehaviorForUnmatched } from '../src/index.js'
 import path from 'path'
 import fs from 'fs/promises'
-import * as Jieba from '@node-rs/jieba'
+import { Jieba } from '@node-rs/jieba'
 import url from 'url'
 
 const __filename = url.fileURLToPath(import.meta.url)
@@ -30,26 +30,32 @@ go(async () => {
 
   const samples = await toArrayAsync(readFileLineByLine(samplesFilename))
 
-  // Jieba的词典只能导入一次, 所以不能在case里导入.
-  const dict = Buffer.from(
-    patterns
-      .map(x => `${x} 0 n`)
-      .join('\n')
-  )
-  Jieba.loadDict(dict)
-
   benchmark.addCase('@node-rs/jieba (cutForSearch)', () => {
+    const dict = Buffer.from(
+      patterns
+        .map(x => `${x} 0 n`)
+        .join('\n')
+    )
+    const jieba = Jieba.withDict(dict)
+
     return () => {
       for (const line of samples) {
-        Jieba.cutForSearch(line)
+        jieba.cutForSearch(line)
       }
     }
   })
 
   benchmark.addCase('@node-rs/jieba (cutAll)', () => {
+    const dict = Buffer.from(
+      patterns
+        .map(x => `${x} 0 n`)
+        .join('\n')
+    )
+    const jieba = Jieba.withDict(dict)
+
     return () => {
       for (const line of samples) {
-        Jieba.cutAll(line)
+        jieba.cutAll(line)
       }
     }
   })
