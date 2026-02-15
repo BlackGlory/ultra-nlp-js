@@ -529,7 +529,7 @@ fn js_number_to_behavior_for_unmatched(
         x if x == BehaviorForUnmatched::Ignore as u8 as f64 => BehaviorForUnmatched::Ignore,
         x if x == BehaviorForUnmatched::KeepAsWords as u8 as f64 => BehaviorForUnmatched::KeepAsWords,
         x if x == BehaviorForUnmatched::KeepAsChars as u8 as f64 => BehaviorForUnmatched::KeepAsChars,
-        _ => panic!("Invalid BehaviorForUnmatched"),
+        _ => cx.throw_error("Invalid BehaviorForUnmatched")?
     };
 
     Ok(result)
