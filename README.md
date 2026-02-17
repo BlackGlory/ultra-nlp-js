@@ -76,7 +76,7 @@ class TextRange implements JSONSerializable<{
 #### ForwardDictionary
 ```ts
 class ForwardDictionary {
-  instance: NativeCedarwoodFowardDictionary
+  instance: NativeCedarwoodForwardDictionary
 
   constructor(patterns: string[])
 }
@@ -85,7 +85,7 @@ class ForwardDictionary {
 #### BackwardDictionary
 ```ts
 class BackwardDictionary {
-  instance: NativeCedarwoodFowardDictionary
+  instance: NativeCedarwoodForwardDictionary
 
   constructor(patterns: string[])
 }
@@ -141,7 +141,7 @@ class StandardDictionary {
 #### ForwardDictionary
 ```ts
 class ForwardDictionary {
-  instance: NativeDaachorseFowardDictionary
+  instance: NativeDaachorseForwardDictionary
 
   constructor(patterns: string[])
 }
@@ -150,7 +150,7 @@ class ForwardDictionary {
 #### BackwardDictionary
 ```ts
 class BackwardDictionary {
-  instance: NativeDaachorseFowardDictionary
+  instance: NativeDaachorseForwardDictionary
 
   constructor(patterns: string[])
 }
