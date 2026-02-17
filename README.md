@@ -95,7 +95,7 @@ class BackwardDictionary {
 ```ts
 function segmentFull(
   text: string
-, dict: StandardDictionary
+, dict: ForwardDictionary
 , behaviorForUnmatched: BehaviorForUnmatched
 ): Match[]
 ```
