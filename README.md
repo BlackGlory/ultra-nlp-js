@@ -85,7 +85,7 @@ class ForwardDictionary {
 #### BackwardDictionary
 ```ts
 class BackwardDictionary {
-  instance: NativeCedarwoodForwardDictionary
+  instance: NativeCedarwoodBackwardDictionary
 
   constructor(patterns: string[])
 }
@@ -150,7 +150,7 @@ class ForwardDictionary {
 #### BackwardDictionary
 ```ts
 class BackwardDictionary {
-  instance: NativeDaachorseForwardDictionary
+  instance: NativeDaachorseBackwardDictionary
 
   constructor(patterns: string[])
 }
