@@ -34,7 +34,7 @@
     "clean:ts": "rimraf lib",
     "build": "run-p build:*",
     "build:rs": "neon build --release",
-    "build:ts": "tsc --project tsconfig.build.json --target es2018",
+    "build:ts": "tsc --project tsconfig.build.json",
     "bench": "run-s bench:*",
     "bench:substring-by-bytes": "tsx benches/substring-by-bytes.ts",
     "bench:segment": "tsx benches/segment.ts",
